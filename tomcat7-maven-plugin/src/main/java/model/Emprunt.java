@@ -22,6 +22,7 @@ public class Emprunt {
         this.idMembre = idMembre;
         this.idLivre = idLivre;
         this.dateEmprunt = dateEmprunt;
+        this.dateRetour=null;
     }
 
     public int get_id() {
@@ -62,5 +63,11 @@ public class Emprunt {
 
     public void set_dateRetour(LocalDate date) {
         dateRetour = date;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Emprunt "+id+" : livre "+idLivre+" par "+idMembre+"emrpunte le "+dateEmprunt+" a rendre le "+dateRetour+"\n";
     }
 }

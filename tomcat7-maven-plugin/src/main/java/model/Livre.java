@@ -46,4 +46,10 @@ public class Livre {
         this.isbn = isbn;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Livre "+id+": "+titre+" de "+auteur+", isbn "+isbn+"\n";
+    }
+
 }
