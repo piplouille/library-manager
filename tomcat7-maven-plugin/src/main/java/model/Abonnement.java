@@ -1,3 +1,5 @@
+package model;
+
 public enum Abonnement {
     BASIC("Abonnement Basic"),
     PREMIUM("Abonnement Premium"),
