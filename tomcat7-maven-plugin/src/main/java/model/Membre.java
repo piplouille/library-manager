@@ -18,7 +18,7 @@ public class Membre {
         this.email = email;
         this.telephone = telephone;
         this.abonnement = abonnement;
-	}
+    }
 	
     public int get_key() {
         return key;
@@ -67,5 +67,10 @@ public class Membre {
     }
     public void set_abonnement(Abonnement abonnement) {
         this.abonnement = abonnement;
+    }
+
+    @override
+    public String toString() {
+        return "Le membre " + prenom + " " + nom + " " + adresse + " " + email + " " + telephone + " " + abonnement.toString() + "\n";
     }
 }
