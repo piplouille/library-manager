@@ -1,7 +1,5 @@
 package model;
 
-import model.Abonnement;
-
 public class Membre {
 	private int key;
 	private String nom;
