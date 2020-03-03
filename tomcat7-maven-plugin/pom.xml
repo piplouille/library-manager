@@ -26,6 +26,13 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.h2/h2 -->
+  <dependency>
+      <groupId>org.h2</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.0</version>
+  </dependency>
   </dependencies>
 
   <build>
