@@ -1,12 +1,10 @@
-package dao;
+package com.excilys.librarymanager.dao;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import com.excilys.librarymanager.exception.DaoException;
-import com.excilys.librarymanager.modele.Emprunt;
-
-import model.*;
+import com.excilys.librarymanager.model.Emprunt;
 
 public interface EmpruntDao {
 	public List<Emprunt> getList() throws DaoException;

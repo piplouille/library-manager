@@ -1,4 +1,4 @@
-package model;
+package com.excilys.librarymanager.model;
 
 public class Livre {
     private int id;
