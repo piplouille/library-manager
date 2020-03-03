@@ -1,0 +1,5 @@
+model/Membre.class
+test/ModeleTest.class
+model/Livre.class
+model/Abonnement.class
+model/Emprunt.class

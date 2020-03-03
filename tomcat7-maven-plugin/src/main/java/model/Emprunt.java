@@ -45,7 +45,7 @@ public class Emprunt {
         return livre;
     }
 
-    public void set_livre(Livre livre)
+    public void set_livre(Livre livre) {
         this.livre= livre;
     }
 
