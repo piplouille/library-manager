@@ -1,9 +1,28 @@
 # in205-library-manager
 Projet final IN205 (Java)
+
 **deadline** : 24 mars 2020
 
-## Lancer le projet
+## Commandes
+
+### Lancer le projet
 ```
 mvn clean install tomcat7:run
 ```
+
+### Rendu du sujet
+```
+tar cvfz projet_becker_madeleine-debesse_laetitia.tgz dossier
+```
+
+Et sujet du mail : [Rendu projet ENSTA]
+
+## Informations
+
+### Abonnement des membres
+
+- BASIC : 2 emprunts simultanés
+- PREMIUM : 5 emprunts simultanés
+- VIP : 20 emprunts simulatanés
+
 
