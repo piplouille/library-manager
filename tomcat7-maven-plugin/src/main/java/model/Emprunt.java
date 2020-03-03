@@ -4,25 +4,25 @@ import java.time.LocalDate;
 
 public class Emprunt {
     private int id;
-    private int idMembre;
-    private int idLivre;
+    private Membre membre;
+    private Livre livre;
     private LocalDate dateEmprunt;
     private LocalDate dateRetour;
 
-    public Emprunt(int id, int idMembre, int idLivre, LocalDate dateEmprunt, LocalDate dateRetour) {
+    public Emprunt(int id, Membre membre, Livre livre, LocalDate dateEmprunt, LocalDate dateRetour) {
         this.id = id;
-        this.idMembre = idMembre;
-        this.idLivre = idLivre;
+        this.membre = membre;
+        this.livre = livre;
         this.dateEmprunt = dateEmprunt;
         this.dateRetour = dateRetour;
     }
 
-    public Emprunt(int id, int idMembre, int idLivre, LocalDate dateEmprunt) {
+    public Emprunt(int id, Membre membre, Livre livre, LocalDate dateEmprunt) {
         this.id = id;
-        this.idMembre = idMembre;
-        this.idLivre = idLivre;
+        this.membre = membre;
+        this.livre = livre;
         this.dateEmprunt = dateEmprunt;
-        this.dateRetour=null;
+        this.dateRetour = null;
     }
 
     public int get_id() {
@@ -33,20 +33,20 @@ public class Emprunt {
         this.id = id;
     }
 
-    public int get_idMembre() {
-        return idMembre;
+    public Membre get_membre() {
+        return membre;
     }
 
-    public void set_idMembre(int id) {
-        idMembre = id;
+    public void set_membre(Membre membre) {
+        this.membre = membre;
     }
 
-    public int get_idLivre() {
-        return idLivre;
+    public Livre get_livre() {
+        return livre;
     }
 
-    public void set_idLivre(int id) {
-        idLivre = id;
+    public void set_livre(Livre livre)
+        this.livre= livre;
     }
 
     public LocalDate get_dateEmprunt() {
@@ -66,8 +66,8 @@ public class Emprunt {
     }
 
     @Override
-    public String toString()
-    {
-        return "Emprunt "+id+" : livre "+idLivre+" par "+idMembre+"emrpunte le "+dateEmprunt+" a rendre le "+dateRetour+"\n";
+    public String toString() {
+        return "Emprunt " + id + " : livre " + livre.get_titre() + " par " + membre.get_prenom() + " "
+                + membre.get_nom() + " le " + dateEmprunt + " a rendre le " + dateRetour + "\n";
     }
 }
