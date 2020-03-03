@@ -1,17 +1,11 @@
 package model;
 
 public enum Abonnement {
-    BASIC("Abonnement Basic"),
-    PREMIUM("Abonnement Premium"),
-    VIP("Abonnement VIP");
-
-    private String name = "";
-
-    Abonnement(String name) {
-        this.name = name;
-    }
+    BASIC,
+    PREMIUM,
+    VIP;
 
     public String name() {
-        return name;
+        return this.toString();
     }
 }
