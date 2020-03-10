@@ -28,11 +28,11 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.h2/h2 -->
-  <dependency>
-      <groupId>org.h2</groupId>
+    <dependency>
+      <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>1.0</version>
-  </dependency>
+      <version>1.4.200</version>
+    </dependency>
   </dependencies>
 
   <build>
