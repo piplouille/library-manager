@@ -2,6 +2,8 @@ package com.excilys.librarymanager.dao;
 
 import com.excilys.librarymanager.model.Membre;
 
+import java.utils.list;
+
 public class MembreDaoImpl implements MembreDao {
     /**
      * @brief Récupère la liste des membres de la BDD
@@ -10,7 +12,7 @@ public class MembreDaoImpl implements MembreDao {
         Connection connection = EstablishConnection.getConnection();
         PreparedStatement getPreparedStatement = null;
         
-        String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre ORDER BY nom, prenom";
+        String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre ORDER BY nom, prenom;";
         
         try {
             getPreparedStatement = connection.prepareStatement(SelectQuery);
@@ -25,7 +27,7 @@ public class MembreDaoImpl implements MembreDao {
 
             while (rs.next()) {
                 // On ajoute le membre à la liste
-                membres.add(Membre(rs.getKey(), rs.getNom(), rs.getPrenom(), rs.getAdresse(), rs.getEmail(), rs.getTelephone(), rs.getAbonnement()));
+                membres.add(Membre(rs.getInt("id"), rs.getString(nom), rs.getString(prenom), rs.getString(adresse), rs.getString(email), rs.getString(telephone), Abonnement.valueOf(rs.getString("abonnement")));
             }
 
             // On renvoie la liste
@@ -58,7 +60,7 @@ public class MembreDaoImpl implements MembreDao {
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
 
-            return Membre(rs.getKey(), rs.getNom(), rs.getPrenom(), rs.getAdresse(), rs.getEmail(), rs.getTelephone(), rs.getAbonnement());
+            return Membre(rs.getInt("id"), rs.getString(nom), rs.getString(prenom), rs.getString(adresse), rs.getString(email), rs.getString(telephone), Abonnement.valueOf(rs.getString("abonnement")));
         }
         catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
@@ -69,7 +71,7 @@ public class MembreDaoImpl implements MembreDao {
         }
         finally {
             connection.close();
-        }   
+        }
     }
 
     /**
@@ -79,7 +81,7 @@ public class MembreDaoImpl implements MembreDao {
         Connection connection = EstablishConnection.getConnection();
         PreparedStatement getPreparedStatement = null;
         
-        String SelectQuery = "INSERT INTO membre(nom, prenom, adresse, email, telephone, abonnement) VALUES (?, ?, ?, ?, ?, ?)";
+        String SelectQuery = "INSERT INTO membre(nom, prenom, adresse, email, telephone, abonnement) VALUES (?, ?, ?, ?, ?, ?);";
         
         try {
             getPreparedStatement = connection.prepareStatement(SelectQuery);
@@ -110,7 +112,86 @@ public class MembreDaoImpl implements MembreDao {
      * @brief Met à jour un membre de la BDD
      */
     public void update(Membre membre) throws DaoException {
-
+        Connection connection = EstablishConnection.getConnection();
+        PreparedStatement getPreparedStatement = null;
+        
+        String SelectQuery = "UPDATE membre SET nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, abonnement = ? WHERE id = ?;";
+        
+        try {
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement.setString(1, membre.getNom());
+            getPreparedStatement.setString(2, membre.getPrenom());
+            getPreparedStatement.setString(3, membre.getAdresse());
+            getPreparedStatement.setString(4, membre.getEmail());
+            getPreparedStatement.setString(5, membre.getTelephone());
+            getPreparedStatement.setString(6, Abonnement.name());
+            getPreparedStatement.setInt(7, membre.getKey())
+            ResultSet rs = getPreparedStatement.executeQuery();
+            getPreparedStatement.close();
+        }
+        catch (SQLException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+            throw new DaoException("ERREUR : MembreDaoImpl.getById()");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
     }
 
+    /**
+     * @brief Supprime un membre de la BDD à partir de son id
+     */
+    public void delete(int id) throws DaoException {
+        Connection connection = EstablishConnection.getConnection();
+        PreparedStatement getPreparedStatement = null;
+        
+        String SelectQuery = "DELETE FROM membre WHERE id = ?;";
+        
+        try {
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement.setInt(1, id);
+            ResultSet rs = getPreparedStatement.executeQuery();
+            getPreparedStatement.close();
+        }
+        catch (SQLException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+            throw new DaoException("ERREUR : MembreDaoImpl.getById()");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
+    }
+
+    /**
+     * @brief Retourne le nombre de membres de la BDD
+     */
+	public int count() throws DaoException {
+        Connection connection = EstablishConnection.getConnection();
+        PreparedStatement getPreparedStatement = null;
+        
+        String SelectQuery = "SELECT COUNT(id) AS count FROM membre;";
+        
+        try {
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            ResultSet rs = getPreparedStatement.executeQuery();
+            getPreparedStatement.close();
+            return rs.getInt("");
+        }
+        catch (SQLException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+            throw new DaoException("ERREUR : MembreDaoImpl.getById()");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }
+    }
 }

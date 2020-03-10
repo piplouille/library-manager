@@ -1,3 +1,4 @@
+/home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/utils/EstablishConnection.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/model/Livre.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/model/Membre.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/dao/EmpruntDaoImpl.java

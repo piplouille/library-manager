@@ -12,8 +12,6 @@ import org.h2.tools.DeleteDbFiles;
 import com.excilys.librarymanager.persistence.ConnectionManager;
 
 public class FillDatabase {
-
-
     public static void main(String[] args) throws Exception {
         try {
             DeleteDbFiles.execute("~", "libraryManagerDatabase", true);
