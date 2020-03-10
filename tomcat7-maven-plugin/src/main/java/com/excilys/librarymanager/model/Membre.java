@@ -20,52 +20,52 @@ public class Membre {
         this.abonnement = abonnement;
     }
 	
-    public int get_key() {
+    public int getKey() {
         return key;
     }
-    public void set_key(int key) {
+    public void setKey(int key) {
         this.key = key;
     }
 
-    public String get_nom() {
+    public String getNom() {
         return nom;
     }
-    public void set_nom(String nom) {
+    public void setNom(String nom) {
         this.nom = nom;
     }
 
-    public String get_prenom() {
+    public String getPrenom() {
         return prenom;
     }
-    public void set_prenom(String prenom) {
+    public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
     
-    public String get_adresse() {
+    public String getAdresse() {
         return adresse;
     }
-    public void set_adresse(String adresse) {
+    public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
     
-    public String get_email() {
+    public String getEmail() {
         return email;
     }
-    public void set_email(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String get_telephone() {
+    public String getTelephone() {
         return telephone;
     }
-    public void set_telephone(String telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-    public Abonnement get_abonnement() {
+    public Abonnement getAbonnement() {
         return abonnement;
     }
-    public void set_abonnement(Abonnement abonnement) {
+    public void setAbonnement(Abonnement abonnement) {
         this.abonnement = abonnement;
     }
 
