@@ -25,49 +25,49 @@ public class Emprunt {
         this.dateRetour = null;
     }
 
-    public int get_id() {
+    public int getId() {
         return id;
     }
 
-    public void set_id(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Membre get_membre() {
+    public Membre getMembre() {
         return membre;
     }
 
-    public void set_membre(Membre membre) {
+    public void setMembre(Membre membre) {
         this.membre = membre;
     }
 
-    public Livre get_livre() {
+    public Livre getLivre() {
         return livre;
     }
 
-    public void set_livre(Livre livre) {
+    public void setLivre(Livre livre) {
         this.livre= livre;
     }
 
-    public LocalDate get_dateEmprunt() {
+    public LocalDate getDateEmprunt() {
         return dateEmprunt;
     }
 
-    public void set_dateEmprunt(LocalDate date) {
+    public void setDateEmprunt(LocalDate date) {
         dateEmprunt = date;
     }
 
-    public LocalDate get_dateRetour() {
+    public LocalDate getDateRetour() {
         return dateRetour;
     }
 
-    public void set_dateRetour(LocalDate date) {
+    public void setDateRetour(LocalDate date) {
         dateRetour = date;
     }
 
     @Override
     public String toString() {
-        return "Emprunt " + id + " : livre " + livre.get_titre() + " par " + membre.get_prenom() + " "
-                + membre.get_nom() + " le " + dateEmprunt + " a rendre le " + dateRetour + "\n";
+        return "Emprunt " + id + " : livre " + livre.getTitre() + " par " + membre.getPrenom() + " "
+                + membre.getNom() + " le " + dateEmprunt + " a rendre le " + dateRetour + "\n";
     }
 }

@@ -14,35 +14,35 @@ public class Livre {
         this.isbn=isbn;
     }
 
-    public int get_id() {
+    public int getId() {
         return id;
     }
 
-    public void set_id(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String get_titre() {
+    public String getTitre() {
         return titre;
     }
 
-    public void set_titre(String titre) {
+    public void setTitre(String titre) {
         this.titre = titre;
     }
 
-    public String get_auteur() {
+    public String getAuteur() {
         return auteur;
     }
 
-    public void set_auteur(String auteur) {
+    public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
 
-    public String get_isbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void set_isbn(String isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
