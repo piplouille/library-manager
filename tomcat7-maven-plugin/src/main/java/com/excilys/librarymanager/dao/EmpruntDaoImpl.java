@@ -350,6 +350,12 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement = connection.prepareStatement(CountQuery);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
+			return rs.getInt(1);
+		} catch (SQLException e) {
+			throw new DaoException("Erreur : Mise a jour de l'emprunt de "+emprunt.getLivre()+" par "+emprunt.getMembre());
+		} finally {
+			connection.close();
+		}
 	}
 
 }
