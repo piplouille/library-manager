@@ -1,8 +1,20 @@
 package com.excilys.librarymanager.dao;
 
 import com.excilys.librarymanager.model.Membre;
+import com.excilys.librarymanager.model.Abonnement;
 
-import java.utils.list;
+import com.excilys.librarymanager.exception.DaoException;
+
+import com.excilys.librarymanager.utils.EstablishConnection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MembreDaoImpl implements MembreDao {
     /**
@@ -27,7 +39,7 @@ public class MembreDaoImpl implements MembreDao {
 
             while (rs.next()) {
                 // On ajoute le membre à la liste
-                membres.add(Membre(rs.getInt("id"), rs.getString(nom), rs.getString(prenom), rs.getString(adresse), rs.getString(email), rs.getString(telephone), Abonnement.valueOf(rs.getString("abonnement")));
+                membres.add(Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), Abonnement.valueOf(rs.getString("abonnement"))));
             }
 
             // On renvoie la liste
@@ -60,7 +72,7 @@ public class MembreDaoImpl implements MembreDao {
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
 
-            return Membre(rs.getInt("id"), rs.getString(nom), rs.getString(prenom), rs.getString(adresse), rs.getString(email), rs.getString(telephone), Abonnement.valueOf(rs.getString("abonnement")));
+            return Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), Abonnement.valueOf(rs.getString("abonnement")));
         }
         catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
@@ -90,11 +102,11 @@ public class MembreDaoImpl implements MembreDao {
             getPreparedStatement.setString(3, adresse);
             getPreparedStatement.setString(4, email);
             getPreparedStatement.setString(5, telephone);
-            getPreparedStatement.setString(6, Abonnement.name());
+            getPreparedStatement.setString(6, Abonnement.BASIC.name());
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
 
-            return rs.getKey();
+            return rs.getInt("id");
         }
         catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
@@ -124,8 +136,8 @@ public class MembreDaoImpl implements MembreDao {
             getPreparedStatement.setString(3, membre.getAdresse());
             getPreparedStatement.setString(4, membre.getEmail());
             getPreparedStatement.setString(5, membre.getTelephone());
-            getPreparedStatement.setString(6, Abonnement.name());
-            getPreparedStatement.setInt(7, membre.getKey())
+            getPreparedStatement.setString(6, membre.getAbonnement().name());
+            getPreparedStatement.setInt(7, membre.getKey());
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
         }

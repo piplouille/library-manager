@@ -1,6 +1,9 @@
 package com.excilys.librarymanager.dao;
 
-import com.excilys.librarymanager.model.*;
+import com.excilys.librarymanager.model.Emprunt;
+import com.excilys.librarymanager.model.Abonnement;
+import com.excilys.librarymanager.model.Membre;
+import com.excilys.librarymanager.model.Livre;
 import com.excilys.librarymanager.exception.DaoException;
 
 import java.sql.*;
@@ -8,6 +11,7 @@ import com.excilys.librarymanager.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 public class EmpruntDaoImpl implements EmpruntDao {
@@ -300,8 +304,9 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement.setDate(2, Date.valueOf(dateEmprunt));
 			//Calcul de la date de retour : depend de l'abonnement du membre
 			LocalDate dateRetour = null;
-			Membre membre = MembreDaoImpl.getById(idMembre);
-			switch()
+			MembreDaoImpl membreDaoImpl = new MembreDaoImpl();
+			Membre membre = membreDaoImpl.getById(idMembre);
+			// switch()
 			getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 			connection.close();

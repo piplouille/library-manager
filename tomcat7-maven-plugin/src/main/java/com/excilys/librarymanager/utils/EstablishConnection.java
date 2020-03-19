@@ -1,4 +1,4 @@
-package com.excilys.librarymanage.utils;
+package com.excilys.librarymanager.utils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
