@@ -6,6 +6,8 @@ Projet final IN205 (Java)
 ## Commandes
 
 ### Lancer le projet
+ALLER DANS LE DOSSIER 'tomcat ...' OK???
+
 ```
 mvn clean install tomcat7:run
 ```
