@@ -298,7 +298,10 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement.setInt(1, idMembre);
 			getPreparedStatement.setInt(2, idLivre);
 			getPreparedStatement.setDate(2, Date.valueOf(dateEmprunt));
-			getPreparedStatement.setDate(3, null);
+			//Calcul de la date de retour : depend de l'abonnement du membre
+			LocalDate dateRetour = null;
+			Membre membre = MembreDaoImpl.getById(idMembre);
+			switch()
 			getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 			connection.close();
