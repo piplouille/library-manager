@@ -1,12 +1,12 @@
 com/excilys/librarymanager/dao/LivreDaoImpl.class
 com/excilys/librarymanager/dao/EmpruntDaoImpl.class
-com/excilys/librarymanager/dao/MembreDaoImpl.class
 com/excilys/librarymanager/model/Livre.class
+com/excilys/librarymanager/dao/MembreDaoImpl.class
 com/excilys/librarymanager/utils/FillDatabase.class
-com/excilys/librarymanager/exception/DaoException.class
 com/excilys/librarymanager/model/Abonnement.class
-com/excilys/librarymanager/dao/MembreDao.class
+com/excilys/librarymanager/exception/DaoException.class
 com/excilys/librarymanager/dao/EmpruntDaoImpl$1.class
+com/excilys/librarymanager/dao/MembreDao.class
 com/excilys/librarymanager/model/Membre.class
 com/excilys/librarymanager/dao/EmpruntDao.class
 com/excilys/librarymanager/utils/EstablishConnection.class
