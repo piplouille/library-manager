@@ -27,14 +27,12 @@ public class LivreDaoImpl implements LivreDao {
      * @return List<Livre> liste des livres
      */
     public List<Livre> getList() throws DaoException {
-        Connection connection;
         List<Livre> liste = new ArrayList<Livre>();
         try {
-            connection = EstablishConnection.getConnection();
-            PreparedStatement getPreparedStatement = null;
+            Connection connection = EstablishConnection.getConnection();
 
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre;";
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
             while (rs.next()) {
@@ -57,14 +55,12 @@ public class LivreDaoImpl implements LivreDao {
      * @return Livre le livre
      */
     public Livre getById(int id) throws DaoException {
-        Connection connection;
         Livre livre = null;
         try {
-            connection = EstablishConnection.getConnection();
-            PreparedStatement getPreparedStatement = null;
+            Connection connection = EstablishConnection.getConnection();
 
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre WHERE id = ?;";
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
@@ -87,10 +83,9 @@ public class LivreDaoImpl implements LivreDao {
      * @return int id du livre
      */
     public int create(String titre, String auteur, String isbn) throws DaoException {
-        Connection connection;
         int id = Integer.MAX_VALUE;
         try {
-            connection = EstablishConnection.getConnection();
+            Connection connection = EstablishConnection.getConnection();
 
             String InsertQuery = "INSERT INTO livre(titre, auteur, isbn) VALUES (?, ?, ?);";
             PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery,
@@ -120,13 +115,11 @@ public class LivreDaoImpl implements LivreDao {
      * @return void
      */
     public void update(Livre livre) throws DaoException {
-        Connection connection;
         try {
-            connection = EstablishConnection.getConnection();
-            PreparedStatement getPreparedStatement = null;
+            Connection connection = EstablishConnection.getConnection();
 
             String UpdateQuery = "UPDATE livre SET titre = ?, auteur = ?, isbn = ? WHERE id = ?;";
-            getPreparedStatement = connection.prepareStatement(UpdateQuery);
+            PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
             getPreparedStatement.setString(1, livre.getTitre());
             getPreparedStatement.setString(2, livre.getAuteur());
             getPreparedStatement.setString(3, livre.getIsbn());
@@ -149,13 +142,11 @@ public class LivreDaoImpl implements LivreDao {
      * @return void
      */
     public void delete(int id) throws DaoException {
-        Connection connection;
         try {
-            connection = EstablishConnection.getConnection();
-            PreparedStatement getPreparedStatement = null;
+            Connection connection = EstablishConnection.getConnection();
 
             String UpdateQuery = "DELETE FROM livre WHERE id = ?;";
-            getPreparedStatement = connection.prepareStatement(UpdateQuery);
+            PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
             getPreparedStatement.setInt(1, id);
             getPreparedStatement.executeQuery();
             getPreparedStatement.close();
@@ -174,14 +165,12 @@ public class LivreDaoImpl implements LivreDao {
      * @return int compte
      */
     public int count() throws DaoException {
-        Connection connection;
         int compte = Integer.MAX_VALUE;
         try {
-            connection = EstablishConnection.getConnection();
-            PreparedStatement getPreparedStatement = null;
+            Connection connection = EstablishConnection.getConnection();
 
             String UpdateQuery = "SELECT COUNT(id) AS count FROM livre;";
-            getPreparedStatement = connection.prepareStatement(UpdateQuery);
+            PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
             connection.close();

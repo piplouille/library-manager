@@ -1,8 +1,6 @@
 package com.excilys.librarymanager.test;
 
 import com.excilys.librarymanager.model.*;
-import com.excilys.librarymanager.exception.DaoException;
-import com.excilys.librarymanager.dao.*;
 import java.time.LocalDate;
 
 public class DaoTest {

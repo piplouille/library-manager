@@ -11,8 +11,8 @@ import com.excilys.librarymanager.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class EmpruntDaoImpl implements EmpruntDao {
 	private static EmpruntDaoImpl instance;
@@ -33,17 +33,17 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return List<Emprunt> liste des emrpunts
 	 */
 	public List<Emprunt> getList() throws DaoException {
-		Connection connection = EstablishConnection.getConnection();
-		PreparedStatement getPreparedStatement = null;
-
-		String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC;";
-
+		List<Emprunt> liste = null;
 		try {
-			getPreparedStatement = connection.prepareStatement(SelectQuery);
+			Connection connection = EstablishConnection.getConnection();
+
+			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC;";
+
+			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 
-			List<Emprunt> liste = new ArrayList<Emprunt>();
+			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
 				Abonnement abonnement = null;
 				switch (rs.getString("abonnement")) {
@@ -65,19 +65,19 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			return liste;
+			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : liste des emprunts");
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			connection.close();
 		}
+		return liste;
+
 	}
 
 	/**
@@ -86,17 +86,17 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return List<Emprunt> liste des emprunts en cours
 	 */
 	public List<Emprunt> getListCurrent() throws DaoException {
-		Connection connection = EstablishConnection.getConnection();
-		PreparedStatement getPreparedStatement = null;
-
-		String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL;";
-
+		List<Emprunt> liste = null;
 		try {
-			getPreparedStatement = connection.prepareStatement(SelectQuery);
+			Connection connection = EstablishConnection.getConnection();
+
+			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL;";
+
+			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 
-			List<Emprunt> liste = new ArrayList<Emprunt>();
+			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
 				Abonnement abonnement = null;
 				switch (rs.getString("abonnement")) {
@@ -118,19 +118,19 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			return liste;
+			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : liste des emprunts en cours ");
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			connection.close();
 		}
+		return liste;
+
 	}
 
 	/**
@@ -139,17 +139,17 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return List<Emprunt> liste des emprunts
 	 */
 	public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
-		Connection connection = EstablishConnection.getConnection();
-		PreparedStatement getPreparedStatement = null;
-
-		String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND membre.id = ?;";
+		List<Emprunt> liste = null;
 		try {
-			getPreparedStatement = connection.prepareStatement(SelectQuery);
+			Connection connection = EstablishConnection.getConnection();
+			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND membre.id = ?;";
+
+			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, idMembre);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 
-			List<Emprunt> liste = new ArrayList<Emprunt>();
+			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
 				Abonnement abonnement = null;
 				switch (rs.getString("abonnement")) {
@@ -171,19 +171,19 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			return liste;
+			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : liste des emprunts du membre " + idMembre);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			connection.close();
 		}
+		return liste;
+
 	}
 
 	/**
@@ -192,18 +192,17 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return List<Emprunt> liste des emprunts
 	 */
 	public List<Emprunt> getListCurrentByLivre(int idLivre) throws DaoException {
-		Connection connection = EstablishConnection.getConnection();
-		PreparedStatement getPreparedStatement = null;
-
-		String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND livre.id = ?;";
-
+		List<Emprunt> liste = null;
 		try {
-			getPreparedStatement = connection.prepareStatement(SelectQuery);
+			Connection connection = EstablishConnection.getConnection();
+			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND livre.id = ?;";
+
+			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, idLivre);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 
-			List<Emprunt> liste = new ArrayList<Emprunt>();
+			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
 				Abonnement abonnement = null;
 				switch (rs.getString("abonnement")) {
@@ -225,19 +224,19 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			return liste;
+
+			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : emprunts en cours du livre " + idLivre);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			connection.close();
 		}
+		return liste;
 	}
 
 	/**
@@ -246,13 +245,12 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return Emprunt
 	 */
 	public Emprunt getById(int id) throws DaoException {
-		Connection connection = EstablishConnection.getConnection();
-		PreparedStatement getPreparedStatement = null;
-
-		String SelectQuery = "SELECT e.id AS idEmprunt, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour, FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE e.id = ?;";
-
 		try {
-			getPreparedStatement = connection.prepareStatement(SelectQuery);
+			Connection connection = EstablishConnection.getConnection();
+
+			String SelectQuery = "SELECT e.id AS idEmprunt, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour, FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE e.id = ?;";
+
+			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, id);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
@@ -275,13 +273,11 @@ public class EmpruntDaoImpl implements EmpruntDao {
 					rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
 			Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 					rs.getString("isbn"));
-
-			return Emprunt(rs.getInt("idEmprunt"), membre, livre, toLocalDate(rs.getDate("dateEmprunt")),
-					toLocalDate(rs.getDate("dateRetour")));
+			connection.close();
+			return new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+					rs.getDate("dateRetour").toLocalDate());
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : Emprunt.getById !");
-		} finally {
-			connection.close();
 		}
 	}
 
@@ -291,22 +287,33 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return void
 	 */
 	public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws DaoException {
-		Connection connection;
 		try {
-			connection = EstablishConnection.getConnection();
-			PreparedStatement getPreparedStatement = null;
+			Connection connection = EstablishConnection.getConnection();
 
 			String InsertQuery = "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt, dateRetour) VALUES (?, ?, ?, ?);";
 
-			getPreparedStatement = connection.prepareStatement(InsertQuery);
+			PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery);
 			getPreparedStatement.setInt(1, idMembre);
 			getPreparedStatement.setInt(2, idLivre);
-			getPreparedStatement.setDate(2, Date.valueOf(dateEmprunt));
-			//Calcul de la date de retour : depend de l'abonnement du membre
-			LocalDate dateRetour = null;
-			MembreDaoImpl membreDaoImpl = new MembreDaoImpl();
-			Membre membre = membreDaoImpl.getById(idMembre);
-			// switch()
+			getPreparedStatement.setDate(3, Date.valueOf(dateEmprunt));
+			// Calcul de la date de retour : depend de l'abonnement du membre
+			LocalDate dateRetour;
+			MembreDaoImpl mDaoImpl = MembreDaoImpl.getInstance();
+			Membre membre = mDaoImpl.getById(idMembre);
+			switch (membre.getAbonnement()) {
+				case BASIC:
+					dateRetour = dateEmprunt.plus(15, ChronoUnit.DAYS);
+					break;
+				case PREMIUM:
+					dateRetour = dateEmprunt.plus(1, ChronoUnit.MONTHS);
+					break;
+				case VIP:
+					dateRetour = dateEmprunt.plus(3, ChronoUnit.MONTHS);
+					break;
+				default:
+					dateRetour = null;
+			}
+			getPreparedStatement.setDate(4, Date.valueOf(dateRetour));
 			getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 			connection.close();
@@ -322,14 +329,13 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return void
 	 */
 	public void update(Emprunt emprunt) throws DaoException {
-		Connection connection;
+
 		try {
-			connection = EstablishConnection.getConnection();
-			PreparedStatement getPreparedStatement = null;
+			Connection connection = EstablishConnection.getConnection();
 
 			String InsertQuery = "UPDATE emprunt SET idMembre = ?, idLivre = ?, dateEmprunt = ?, dateRetour = ? WHERE id = ?;";
 
-			getPreparedStatement = connection.prepareStatement(InsertQuery);
+			PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery);
 			getPreparedStatement.setInt(1, emprunt.getMembre().getKey());
 			getPreparedStatement.setInt(2, emprunt.getLivre().getId());
 			getPreparedStatement.setDate(2, Date.valueOf(emprunt.getDateEmprunt()));
@@ -338,23 +344,19 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 			connection.close();
-		} catch (
-
-		SQLException e) {
+		} catch (SQLException e) {
 			throw new DaoException(
 					"Erreur : Mise a jour de l'emprunt de " + emprunt.getLivre() + " par " + emprunt.getMembre());
 		}
 	}
 
 	public int count() throws DaoException {
-		Connection connection;
 		try {
-			connection = EstablishConnection.getConnection();
-			PreparedStatement getPreparedStatement = null;
+			Connection connection = EstablishConnection.getConnection();
 
 			String CountQuery = "SELECT COUNT(id) AS count FROM emprunt;";
 
-			getPreparedStatement = connection.prepareStatement(CountQuery);
+			PreparedStatement getPreparedStatement = connection.prepareStatement(CountQuery);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 			connection.close();

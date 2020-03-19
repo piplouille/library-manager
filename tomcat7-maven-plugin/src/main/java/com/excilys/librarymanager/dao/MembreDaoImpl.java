@@ -8,7 +8,6 @@ import com.excilys.librarymanager.exception.DaoException;
 import com.excilys.librarymanager.utils.EstablishConnection;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,86 +16,94 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MembreDaoImpl implements MembreDao {
+    private static MembreDaoImpl instance;
+
+    private MembreDaoImpl() {
+    };
+
+    public static MembreDaoImpl getInstance() {
+        if (instance == null) {
+            instance = new MembreDaoImpl();
+        }
+        return instance;
+    }
+
     /**
      * @brief Récupère la liste des membres de la BDD
      */
     public List<Membre> getList() throws DaoException {
-        Connection connection = EstablishConnection.getConnection();
-        PreparedStatement getPreparedStatement = null;
-        
-        String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre ORDER BY nom, prenom;";
-        
+        List<Membre> membres = null;
         try {
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            Connection connection = EstablishConnection.getConnection();
+
+            String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre ORDER BY nom, prenom;";
+
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
 
             /*
-            Il faut mettre les membres dans une liste : on crée une liste qu'on initialise par tout
-            */
+             * Il faut mettre les membres dans une liste : on crée une liste qu'on
+             * initialise par tout
+             */
             // On crée la liste
-            List<Membre> membres = new ArrayList<Membre>();
+            membres = new ArrayList<Membre>();
 
             while (rs.next()) {
                 // On ajoute le membre à la liste
-                membres.add(Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), Abonnement.valueOf(rs.getString("abonnement"))));
+                membres.add(new Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
+                        rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"),
+                        Abonnement.valueOf(rs.getString("abonnement"))));
             }
-
+            connection.close();
             // On renvoie la liste
-            return membres;
-        }
-        catch (SQLException e) {
+
+        } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getList()");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            connection.close();
-        }
+        return membres;
     }
 
     /**
      * @brief Récupère membre par son id
      */
     public Membre getById(int id) throws DaoException {
-        Connection connection = EstablishConnection.getConnection();
-        PreparedStatement getPreparedStatement = null;
-        
-        String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre WHERE id = ?;";
-        
+        Membre membre = null;
         try {
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            Connection connection = EstablishConnection.getConnection();
+
+            String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre WHERE id = ?;";
+
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
-
-            return Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), Abonnement.valueOf(rs.getString("abonnement")));
-        }
-        catch (SQLException e) {
+            connection.close();
+            membre = new Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("adresse"),
+                    rs.getString("email"), rs.getString("telephone"), Abonnement.valueOf(rs.getString("abonnement")));
+        } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            connection.close();
-        }
+        return membre;
     }
 
     /**
      * @brief Insère un membre dans la BDD et renvoie son id
      */
     public int create(String nom, String prenom, String adresse, String email, String telephone) throws DaoException {
-        Connection connection = EstablishConnection.getConnection();
-        PreparedStatement getPreparedStatement = null;
-        
-        String SelectQuery = "INSERT INTO membre(nom, prenom, adresse, email, telephone, abonnement) VALUES (?, ?, ?, ?, ?, ?);";
-        
+        int id = Integer.MAX_VALUE;
         try {
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            Connection connection = EstablishConnection.getConnection();
+
+            String SelectQuery = "INSERT INTO membre(nom, prenom, adresse, email, telephone, abonnement) VALUES (?, ?, ?, ?, ?, ?);";
+
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setString(1, nom);
             getPreparedStatement.setString(2, prenom);
             getPreparedStatement.setString(3, adresse);
@@ -105,32 +112,27 @@ public class MembreDaoImpl implements MembreDao {
             getPreparedStatement.setString(6, Abonnement.BASIC.name());
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
-
-            return rs.getInt("id");
-        }
-        catch (SQLException e) {
+            connection.close();
+            id = rs.getInt("id");
+        } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.create()");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            connection.close();
-        }
+        return id;
     }
 
     /**
      * @brief Met à jour un membre de la BDD
      */
     public void update(Membre membre) throws DaoException {
-        Connection connection = EstablishConnection.getConnection();
-        PreparedStatement getPreparedStatement = null;
-        
-        String SelectQuery = "UPDATE membre SET nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, abonnement = ? WHERE id = ?;";
-        
         try {
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            Connection connection = EstablishConnection.getConnection();
+
+            String SelectQuery = "UPDATE membre SET nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, abonnement = ? WHERE id = ?;";
+
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setString(1, membre.getNom());
             getPreparedStatement.setString(2, membre.getPrenom());
             getPreparedStatement.setString(3, membre.getAdresse());
@@ -138,18 +140,14 @@ public class MembreDaoImpl implements MembreDao {
             getPreparedStatement.setString(5, membre.getTelephone());
             getPreparedStatement.setString(6, membre.getAbonnement().name());
             getPreparedStatement.setInt(7, membre.getKey());
-            ResultSet rs = getPreparedStatement.executeQuery();
+            getPreparedStatement.executeQuery();
             getPreparedStatement.close();
-        }
-        catch (SQLException e) {
+            connection.close();
+        } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            connection.close();
         }
     }
 
@@ -157,26 +155,21 @@ public class MembreDaoImpl implements MembreDao {
      * @brief Supprime un membre de la BDD à partir de son id
      */
     public void delete(int id) throws DaoException {
-        Connection connection = EstablishConnection.getConnection();
-        PreparedStatement getPreparedStatement = null;
-        
-        String SelectQuery = "DELETE FROM membre WHERE id = ?;";
-        
         try {
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            Connection connection = EstablishConnection.getConnection();
+
+            String SelectQuery = "DELETE FROM membre WHERE id = ?;";
+
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
-            ResultSet rs = getPreparedStatement.executeQuery();
+            getPreparedStatement.executeQuery();
             getPreparedStatement.close();
-        }
-        catch (SQLException e) {
+            connection.close();
+        } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            connection.close();
         }
     }
 
@@ -187,27 +180,24 @@ public class MembreDaoImpl implements MembreDao {
     /**
      * @brief Retourne le nombre de membres de la BDD
      */
-	public int count() throws DaoException {
-        Connection connection = EstablishConnection.getConnection();
-        PreparedStatement getPreparedStatement = null;
-        
-        String SelectQuery = "SELECT COUNT(id) AS count FROM membre;";
-        
+    public int count() throws DaoException {
+        int count = Integer.MAX_VALUE;
         try {
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            Connection connection = EstablishConnection.getConnection();
+
+            String SelectQuery = "SELECT COUNT(id) AS count FROM membre;";
+
+            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
             ResultSet rs = getPreparedStatement.executeQuery();
             getPreparedStatement.close();
-            return rs.getInt("");
-        }
-        catch (SQLException e) {
+            connection.close();
+            count = rs.getInt("");
+        } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            connection.close();
-        }
+        return count;
     }
 }

@@ -25,6 +25,6 @@ Et sujet du mail : [Rendu projet ENSTA]
 
 - BASIC : 2 emprunts simultanés
 - PREMIUM : 5 emprunts simultanés
-- VIP : 20 emprunts simulatanés
+- VIP : 20 emprunts simultanés
 
 
