@@ -1,8 +1,18 @@
-package com.excylis.librarymanager.service;
+package com.excilys.librarymanager.service;
 
 import java.sql.SQLException;
 
-import com.excylis.librarymanager.dao.MembreDaoImpl;
+import com.excilys.librarymanager.model.Membre;
+import com.excilys.librarymanager.model.Abonnement;
+
+import com.excilys.librarymanager.dao.MembreDaoImpl;
+import com.excilys.librarymanager.dao.EmpruntDaoImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.excilys.librarymanager.exception.ServiceException;
+import com.excilys.librarymanager.exception.DaoException;
 
 public class MembreServiceImpl implements MembreService {
     // Singleton
@@ -20,39 +30,49 @@ public class MembreServiceImpl implements MembreService {
 
     public List<Membre> getList() throws ServiceException {
         MembreDaoImpl dao = MembreDaoImpl.getInstance();
+        List<Membre> liste = null;
         try {
-            return dao.getList();
+            liste = dao.getList();
         }
         catch (DaoException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
         }
+        return liste;
     }
 
     public List<Membre> getListMembreEmpruntPossible() throws ServiceException {
-        MembreDaoImpl dao = MembreDaoImpl.getInstance();
+        MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        EmpruntDaoImpl dao_emprunt = EmpruntDaoImpl.getInstance();
+        List<Membre> possible = new ArrayList<Membre>();
         try {
-            List<Membre> membres = dao.getList();
+            List<Membre> membres = dao_membre.getList();
             // On teste chaque membre selon abonnement
-            for (int i = 0 ; i < membres.size() ; i++)
-                switch (membres[i].getAbonnement()) {
+            int no;
+            for (int i = 0 ; i < membres.size() ; i++) {
+                no = dao_emprunt.getListCurrentByMembre(membres.get(i).getKey()).size();
+                switch (membres.get(i).getAbonnement()) {
                     case BASIC:
-                        if (membres[i].get)
-                        dateRetour = dateEmprunt.plus(15, ChronoUnit.DAYS);
+                        if (no < 2) {
+                            possible.add(membres.get(i));
+                        }
                         break;
                     case PREMIUM:
-                        dateRetour = dateEmprunt.plus(1, ChronoUnit.MONTHS);
+                        if (no < 5) {
+                            possible.add(membres.get(i));
+                        }
                         break;
                     case VIP:
-                        dateRetour = dateEmprunt.plus(3, ChronoUnit.MONTHS);
+                        if (no < 20) {
+                            possible.add(membres.get(i));
+                        }
                         break;
-                    default:
-                        dateRetour = null;
+                    default: break;
                 }
             }
-            return dao.getList();
         }
         catch (DaoException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
         }
+        return possible;
     }
 }
