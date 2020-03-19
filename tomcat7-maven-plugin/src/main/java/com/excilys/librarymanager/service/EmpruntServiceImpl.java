@@ -6,6 +6,7 @@ import com.excilys.librarymanager.exception.DaoException;
 import com.excilys.librarymanager.model.Emprunt;
 import com.excilys.librarymanager.model.Livre;
 import com.excilys.librarymanager.model.Membre;
+import com.excilys.librarymanager.model.Abonnement;
 
 import com.excilys.librarymanager.dao.EmpruntDaoImpl;
 
@@ -179,12 +180,12 @@ public class EmpruntServiceImpl implements EmpruntService
     public boolean isLivreDispo(int idLivre) throws ServiceException
     {
         try{
-            if(idLivre==null)
+            if(idLivre==0)
             {
                 throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE NUL");
             }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            Liste<Emprunt> emprunts = dao.getListCurrentByLivre(idLivre);
+            List<Emprunt> emprunts = dao.getListCurrentByLivre(idLivre);
             return emprunts.isEmpty();
         } catch (DaoException error)
         {
@@ -203,7 +204,7 @@ public class EmpruntServiceImpl implements EmpruntService
                 throw new ServiceException("Erreur : Service si emprunt possible : MEMBRE NUL");
             }
             int nbLivres ;
-            switch(membre.getAbonnement()==null)
+            switch(membre.getAbonnement())
             {
                 case BASIC:
                     nbLivres = 2;
@@ -216,10 +217,9 @@ public class EmpruntServiceImpl implements EmpruntService
                     break;
                 default:
                     throw new ServiceException("Erreur : Service si emprunt possible : ABONNEMENT INVALIDE");
-                    break;
             }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            int nbEmprunts = dao.getListCurrentByMembre(membre.getKey());
+            int nbEmprunts = dao.getListCurrentByMembre(membre.getKey()).size();
             return (nbEmprunts<nbLivres);
         } catch (DaoException error)
         {
