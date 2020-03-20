@@ -48,31 +48,15 @@ public class MembreServiceImpl implements MembreService {
      */
     public List<Membre> getListMembreEmpruntPossible() throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
-        EmpruntDaoImpl dao_emprunt = EmpruntDaoImpl.getInstance();
+        EmpruntServiceImpl service_emprunt = EmpruntServiceImpl.getInstance();
         List<Membre> possible = new ArrayList<Membre>();
+
         try {
             List<Membre> membres = dao_membre.getList();
             // On teste chaque membre selon abonnement
-            int no;
             for (int i = 0 ; i < membres.size() ; i++) {
-                no = dao_emprunt.getListCurrentByMembre(membres.get(i).getKey()).size();
-                switch (membres.get(i).getAbonnement()) {
-                    case BASIC:
-                        if (no < 2) {
-                            possible.add(membres.get(i));
-                        }
-                        break;
-                    case PREMIUM:
-                        if (no < 5) {
-                            possible.add(membres.get(i));
-                        }
-                        break;
-                    case VIP:
-                        if (no < 20) {
-                            possible.add(membres.get(i));
-                        }
-                        break;
-                    default: break;
+                if (service_emprunt.isEmpruntPossible(membres.get(i))) {
+                    possible.add(membres.get(i));
                 }
             }
         }
@@ -83,7 +67,7 @@ public class MembreServiceImpl implements MembreService {
     }
 
     /**
-     * Récupère un membre par son id
+     * @brief Récupère un membre par son id
      */
     public Membre getById(int id) throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();

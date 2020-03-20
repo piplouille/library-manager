@@ -47,10 +47,10 @@ public class LivreServiceImpl implements LivreService
 	 */
     public List<Livre> getListDispo() throws ServiceException
     {
+        List<Livre> liste_dispo = new ArrayList<Livre>();
         try{
             EmpruntServiceImpl emprunt = EmpruntServiceImpl.getInstance();
             List<Livre> liste_complete = getList();
-            List<Livre> liste_dispo = new ArrayList<Livre>();
             for(Livre livre : liste_complete)
             {
                 if(emprunt.isLivreDispo(livre.getId()))
@@ -58,12 +58,13 @@ public class LivreServiceImpl implements LivreService
                     liste_dispo.add(livre);
                 }
             }
-            return liste_dispo;
+            
         }
         catch(ServiceException error)
         {
             throw new ServiceException("Erreur Service Livre : liste des livres disponibles");
         }
+        return liste_dispo;
     }
 
     /**
@@ -71,9 +72,13 @@ public class LivreServiceImpl implements LivreService
 	 */
     public Livre getById(int id) throws ServiceException
     {
+        if(id<0)
+        {
+            throw new ServiceException("Erreur Service Livre : livre par id ID INVALIDE");
+        }
         try{
             LivreDaoImpl dao = LivreDaoImpl.getInstance();
-            return dao.getById();
+            return dao.getById(id);
         }
         catch(DaoException error)
         {
@@ -88,15 +93,15 @@ public class LivreServiceImpl implements LivreService
     {
         if(titre == null)
         {
-            throw new ServiceException("Erreur Service Livre : livre par id TITRE NUL");
+            throw new ServiceException("Erreur Service Livre : creation de livre TITRE NUL");
         }
         if(auteur == null)
         {
-            throw new ServiceException("Erreur Service Livre : livre par id AUTEUR NUL");
+            throw new ServiceException("Erreur Service Livre : creation de livre AUTEUR NUL");
         }
         if(isbn == null)
         {
-            throw new ServiceException("Erreur Service Livre : livre par id ISBN NUL");
+            throw new ServiceException("Erreur Service Livre : creation de livre ISBN NUL");
         }
         try{
             LivreDaoImpl dao = LivreDaoImpl.getInstance();
@@ -108,8 +113,56 @@ public class LivreServiceImpl implements LivreService
         }
     }
 
+    /**
+	 * @brief Service pour mettre un livre a jour
+	 */
     public void update(Livre livre) throws ServiceException
     {
-        
+        if(livre == null)
+        {
+            throw new ServiceException("Erreur Service Livre : mise a jour de livre LIVRE NUL");
+        }
+        try{
+            LivreDaoImpl dao = LivreDaoImpl.getInstance();
+            dao.update(livre);
+        }
+        catch(DaoException error)
+        {
+            throw new ServiceException("Erreur Service Livre : mise a jour du livre "+livre.getTitre()+" par "+livre.getAuteur()+" isbn : "+livre.getIsbn()+" id : "+livre.getId());
+        }
+    }
+
+    /**
+	 * @brief Service pour supprimer un livre
+	 */
+    public void delete(int id) throws ServiceException
+    {
+        if(id<0)
+        {
+            throw new ServiceException("Erreur Service Livre : suppression de livre ID INVALIDE");
+        }
+        try{
+            LivreDaoImpl dao = LivreDaoImpl.getInstance();
+            dao.delete(id);
+        }
+        catch(DaoException error)
+        {
+            throw new ServiceException("Erreur Service Livre : suppression du livre "+id);
+        }
+    }
+
+    /**
+	 * @brief Service pour compter les livres
+	 */
+    public int count() throws ServiceException
+    {
+        try{
+            LivreDaoImpl dao = LivreDaoImpl.getInstance();
+            return dao.count();
+        }
+        catch(DaoException error)
+        {
+            throw new ServiceException("Erreur Service Livre : comptage des livres");
+        }
     }
 }
