@@ -174,10 +174,6 @@ public class MembreDaoImpl implements MembreDao {
     }
 
     /**
-     * 
-     **/
-
-    /**
      * @brief Retourne le nombre de membres de la BDD
      */
     public int count() throws DaoException {

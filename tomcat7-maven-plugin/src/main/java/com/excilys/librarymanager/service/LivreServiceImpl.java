@@ -38,7 +38,7 @@ public class LivreServiceImpl implements LivreService
         }
         catch(DaoException error)
         {
-            throw new ServiceException("Erreur : Service livre getList");
+            throw new ServiceException("Erreur Service Livre : liste des livres");
         }
     }
 
@@ -62,7 +62,54 @@ public class LivreServiceImpl implements LivreService
         }
         catch(ServiceException error)
         {
-            throw new ServiceException("Erreur : Service livre getList");
+            throw new ServiceException("Erreur Service Livre : liste des livres disponibles");
         }
+    }
+
+    /**
+	 * @brief Service pour obtenir un livre par id
+	 */
+    public Livre getById(int id) throws ServiceException
+    {
+        try{
+            LivreDaoImpl dao = LivreDaoImpl.getInstance();
+            return dao.getById();
+        }
+        catch(DaoException error)
+        {
+            throw new ServiceException("Erreur Service Livre : livre par id");
+        }
+    }
+
+    /**
+	 * @brief Service pour creer un livre
+	 */
+    public int create(String titre, String auteur, String isbn) throws ServiceException
+    {
+        if(titre == null)
+        {
+            throw new ServiceException("Erreur Service Livre : livre par id TITRE NUL");
+        }
+        if(auteur == null)
+        {
+            throw new ServiceException("Erreur Service Livre : livre par id AUTEUR NUL");
+        }
+        if(isbn == null)
+        {
+            throw new ServiceException("Erreur Service Livre : livre par id ISBN NUL");
+        }
+        try{
+            LivreDaoImpl dao = LivreDaoImpl.getInstance();
+            return dao.create(titre,auteur,isbn);
+        }
+        catch(DaoException error)
+        {
+            throw new ServiceException("Erreur Service Livre : creation du livre "+titre+" par "+auteur+" isbn : "+isbn);
+        }
+    }
+
+    public void update(Livre livre) throws ServiceException
+    {
+        
     }
 }

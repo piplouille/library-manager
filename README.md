@@ -27,4 +27,10 @@ Et sujet du mail : [Rendu projet ENSTA]
 - PREMIUM : 5 emprunts simultanés
 - VIP : 20 emprunts simultanés
 
+### Gestion date retour des emprunts
 
+On écrit la date à laquelle le livre a été rendu
+
+### Gestion des livres
+
+Deux livres identiques ont leur propre id

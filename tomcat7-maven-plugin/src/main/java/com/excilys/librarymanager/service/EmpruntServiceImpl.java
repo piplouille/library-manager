@@ -91,11 +91,11 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public Emprunt getById(int id) throws ServiceException
     {
+        if(id<0)
+        {
+            throw new ServiceException("Erreur : Service recuperer un emprunt par id : ID INVALIDE");
+        }
         try{
-            if(id<0)
-            {
-                throw new ServiceException("Erreur : Service recuperer un emprunt par id : ID INVALIDE");
-            }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             Emprunt emprunt = dao.getById(id); //idLivre
             if (emprunt == null)
@@ -113,19 +113,19 @@ public class EmpruntServiceImpl implements EmpruntService
 	 * @brief Service pour creer un emprunt
 	 */
     public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws ServiceException {
+        if(idMembre<0)
+        {
+            throw new ServiceException("Erreur : Service creer un emprunt : ID MEMBRE INVALIDE");
+        }
+        if(idLivre<0)
+        {
+            throw new ServiceException("Erreur : Service creer un emprunt : ID LIVRE INVALIDE");
+        }
+        if(dateEmprunt==null)
+        {
+            throw new ServiceException("Erreur : Service creer un emprunt : DATE EMPRUNT NULLE");
+        }
         try{
-            if(idMembre<0)
-            {
-                throw new ServiceException("Erreur : Service creer un emprunt : ID MEMBRE INVALIDE");
-            }
-            if(idLivre<0)
-            {
-                throw new ServiceException("Erreur : Service creer un emprunt : ID LIVRE INVALIDE");
-            }
-            if(dateEmprunt==null)
-            {
-                throw new ServiceException("Erreur : Service creer un emprunt : DATE EMPRUNT NULLE");
-            }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             dao.create(idMembre,idLivre,dateEmprunt);
         } catch (DaoException error)
@@ -139,11 +139,11 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public void returnBook(int idEmprunt) throws ServiceException
     {
+        if(idEmprunt<0)
+        {
+            throw new ServiceException("Erreur : Service rendre un livre : ID EMPRUNT INVALIDE");
+        }
         try{
-            if(idEmprunt<0)
-            {
-                throw new ServiceException("Erreur : Service rendre un livre : ID EMPRUNT INVALIDE");
-            }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             Emprunt emprunt = dao.getById(idEmprunt);
             if(emprunt==null)
@@ -179,12 +179,13 @@ public class EmpruntServiceImpl implements EmpruntService
     // on suppose qu'il n'y a qu'un seul exemplaire de chaque livre
     public boolean isLivreDispo(int idLivre) throws ServiceException
     {
+        if(idLivre<0)
+        {
+            throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE INVALIDE");
+        }
         try{
-            if(idLivre<0)
-            {
-                throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE INVALIDE");
-            }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
+            // renvoie listes des emprunts en cours
             List<Emprunt> emprunts = dao.getListCurrentByLivre(idLivre);
             return emprunts.isEmpty();
         } catch (DaoException error)
@@ -198,11 +199,11 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public boolean isEmpruntPossible(Membre membre) throws ServiceException
     {
+        if(membre==null)
+        {
+            throw new ServiceException("Erreur : Service si emprunt possible : MEMBRE NUL");
+        }
         try{
-            if(membre==null)
-            {
-                throw new ServiceException("Erreur : Service si emprunt possible : MEMBRE NUL");
-            }
             int nbLivres ;
             switch(membre.getAbonnement())
             {

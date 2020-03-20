@@ -112,5 +112,44 @@ public class MembreServiceImpl implements MembreService {
         return id;
     }
 
-    
+    /**
+     * @brief Update un membre suivant le pattern en argument
+     */
+    public void update(Membre membre) throws ServiceException {
+        MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        try {
+            dao_membre.update(membre);
+        }
+        catch (DaoException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * @brief Delete un membre avec l'id en argument
+     */
+    public void delete(int id) throws ServiceException {
+        MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        try {
+            dao_membre.delete(id);
+        }
+        catch (DaoException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * @brief Return le nombre de membres dans la BDD
+     */
+    public int count() throws ServiceException {
+        MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        int nombre = -1;
+        try {
+            nombre = dao_membre.count();
+        }
+        catch (DaoException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+        return nombre;
+    }
 }

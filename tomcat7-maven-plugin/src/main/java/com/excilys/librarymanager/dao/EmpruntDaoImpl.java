@@ -296,24 +296,26 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement.setInt(1, idMembre);
 			getPreparedStatement.setInt(2, idLivre);
 			getPreparedStatement.setDate(3, Date.valueOf(dateEmprunt));
+/* D'apres la construction de getListCurrent(), dans la date retour on doit mettre null
 			// Calcul de la date de retour : depend de l'abonnement du membre
-			LocalDate dateRetour;
-			MembreDaoImpl mDaoImpl = MembreDaoImpl.getInstance();
-			Membre membre = mDaoImpl.getById(idMembre);
-			switch (membre.getAbonnement()) {
-				case BASIC:
-					dateRetour = dateEmprunt.plus(15, ChronoUnit.DAYS);
-					break;
-				case PREMIUM:
-					dateRetour = dateEmprunt.plus(1, ChronoUnit.MONTHS);
-					break;
-				case VIP:
-					dateRetour = dateEmprunt.plus(3, ChronoUnit.MONTHS);
-					break;
-				default:
-					dateRetour = null;
-			}
-			getPreparedStatement.setDate(4, Date.valueOf(dateRetour));
+			// LocalDate dateRetour;
+			// MembreDaoImpl mDaoImpl = MembreDaoImpl.getInstance();
+			// Membre membre = mDaoImpl.getById(idMembre);
+			// switch (membre.getAbonnement()) {
+			// 	case BASIC:
+			// 		dateRetour = dateEmprunt.plus(15, ChronoUnit.DAYS);
+			// 		break;
+			// 	case PREMIUM:
+			// 		dateRetour = dateEmprunt.plus(1, ChronoUnit.MONTHS);
+			// 		break;
+			// 	case VIP:
+			// 		dateRetour = dateEmprunt.plus(3, ChronoUnit.MONTHS);
+			// 		break;
+			// 	default:
+			// 		dateRetour = null;
+			// }
+*/
+			getPreparedStatement.setDate(4, null);
 			getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 			connection.close();
