@@ -10,20 +10,17 @@ import com.excilys.librarymanager.exception.ServletException;
 import java.io.IOException;
 
 public class DashboardServlet extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("webapp/WEB-INF/View/dashboard.jsp");
-        PrintWriter out = response.getWriter();
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>bjr</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>Bonjour le monde !</h1>");
-        out.println("</body>");
-        out.println("</html>");
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
+        }
+        catch (IOException e) {
+            throw new ServletException("Erreur : vtff");
+        }
+        catch (Exception e) {
+            throw new IOException("help");
+        }
+        
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        doGet(request, response);
-    }
 }

@@ -8,7 +8,7 @@
   
   <servlet>
     <servlet-name>DashboardServlet</servlet-name>
-    <servlet-class>com.excilys.librarymanager.servlet</servlet-class>
+    <servlet-class>com.excilys.librarymanager.servlet.DashboardServlet</servlet-class>    
     <load-on-startup>1</load-on-startup>
   </servlet>
 
