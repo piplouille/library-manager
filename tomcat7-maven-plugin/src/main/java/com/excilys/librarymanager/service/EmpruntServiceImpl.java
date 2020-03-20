@@ -92,9 +92,9 @@ public class EmpruntServiceImpl implements EmpruntService
     public Emprunt getById(int id) throws ServiceException
     {
         try{
-            if(id==0)
+            if(id<0)
             {
-                throw new ServiceException("Erreur : Service recuperer un emprunt par id : ID NUL");
+                throw new ServiceException("Erreur : Service recuperer un emprunt par id : ID INVALIDE");
             }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             Emprunt emprunt = dao.getById(id); //idLivre
@@ -114,13 +114,13 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws ServiceException {
         try{
-            if(idMembre==0)
+            if(idMembre<0)
             {
-                throw new ServiceException("Erreur : Service creer un emprunt : ID MEMBRE NUL");
+                throw new ServiceException("Erreur : Service creer un emprunt : ID MEMBRE INVALIDE");
             }
-            if(idLivre==0)
+            if(idLivre<0)
             {
-                throw new ServiceException("Erreur : Service creer un emprunt : ID LIVRE NUL");
+                throw new ServiceException("Erreur : Service creer un emprunt : ID LIVRE INVALIDE");
             }
             if(dateEmprunt==null)
             {
@@ -140,9 +140,9 @@ public class EmpruntServiceImpl implements EmpruntService
     public void returnBook(int idEmprunt) throws ServiceException
     {
         try{
-            if(idEmprunt==0)
+            if(idEmprunt<0)
             {
-                throw new ServiceException("Erreur : Service rendre un livre : ID EMPRUNT NUL");
+                throw new ServiceException("Erreur : Service rendre un livre : ID EMPRUNT INVALIDE");
             }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             Emprunt emprunt = dao.getById(idEmprunt);
@@ -180,9 +180,9 @@ public class EmpruntServiceImpl implements EmpruntService
     public boolean isLivreDispo(int idLivre) throws ServiceException
     {
         try{
-            if(idLivre==0)
+            if(idLivre<0)
             {
-                throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE NUL");
+                throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE INVALIDE");
             }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             List<Emprunt> emprunts = dao.getListCurrentByLivre(idLivre);

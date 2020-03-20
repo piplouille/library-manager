@@ -28,6 +28,9 @@ public class MembreServiceImpl implements MembreService {
 		return instance;
     }
 
+    /**
+     * @brief Récupère la liste de tous les membres
+     */
     public List<Membre> getList() throws ServiceException {
         MembreDaoImpl dao = MembreDaoImpl.getInstance();
         List<Membre> liste = null;
@@ -40,6 +43,9 @@ public class MembreServiceImpl implements MembreService {
         return liste;
     }
 
+    /**
+     * @brief Récupère la liste des membres pouvant faire un emprunt
+     */
     public List<Membre> getListMembreEmpruntPossible() throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
         EmpruntDaoImpl dao_emprunt = EmpruntDaoImpl.getInstance();
@@ -75,4 +81,36 @@ public class MembreServiceImpl implements MembreService {
         }
         return possible;
     }
+
+    /**
+     * Récupère un membre par son id
+     */
+    public Membre getById(int id) throws ServiceException {
+        MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        Membre membre = null;
+        try {
+            membre = dao_membre.getById(id);
+        }
+        catch (DaoException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+        return membre;
+    }
+
+    /**
+     * @brief Ajoute un membre à la base de données
+     */
+    public int create(String nom, String prenom, String adresse, String email, String telephone) throws ServiceException {
+        MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        int id = -1;
+        try {
+            id = dao_membre.create(nom, prenom, adresse, email, telephone);
+        }
+        catch (DaoException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+        return id;
+    }
+
+    
 }
