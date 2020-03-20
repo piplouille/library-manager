@@ -5,4 +5,28 @@
     <error-code>500</error-code>
     <location>/WEB-INF/View/error_500.jsp</location>
   </error-page>
+  
+  <servlet>
+    <servlet-name>DashboardServlet</servlet-name>
+    <servlet-class>com.excilys.librarymanager.servlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DashboardServlet</servlet-name>
+    <url-pattern>/dashboard</url-pattern>
+  </servlet-mapping>
+
 </web-app>
+
+
+<!-- <servlet>
+  <servlet-name>EmpruntAddServlet</servlet-name>
+  <servlet-class>com.excilys.librarymanager.servlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+</servlet> -->
+
+<!-- <servlet-mapping>
+  <servlet-name>EmpruntAddServlet</servlet-name>
+  <url-pattern>/emprunt-add</url-pattern>
+</servlet-mapping> -->

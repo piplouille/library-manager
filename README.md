@@ -5,6 +5,11 @@ Projet final IN205 (Java)
 
 ## Commandes
 
+### Voir le site sur navigateur
+```
+http://localhost:8080/tomcat7-maven-plugin/dashboard
+```
+
 ### Lancer le projet
 ALLER DANS LE DOSSIER 'tomcat ...' OK???
 
