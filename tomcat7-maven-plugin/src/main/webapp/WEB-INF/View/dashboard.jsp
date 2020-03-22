@@ -12,6 +12,8 @@
 </head>
 
 <body>
+  <h1>VOILA JE MAFFICHE</h1>
+  <!--
   <jsp:include page='menu.jsp'></jsp:include>
   <main>
     <section class="content">
@@ -23,8 +25,8 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>12</h3> <!-- TODO : afficher le nombre de membres à la place de 12 -->
-              <p>Membres</p>
+              <h3>12</h3> --><!-- TODO : afficher le nombre de membres ï¿½ la place de 12 -->
+              <!--<p>Membres</p>
             </div>
             <div class="icon">
             <ion-icon name="people"></ion-icon>
@@ -35,8 +37,8 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>27</h3> <!-- TODO : afficher le nombre de livres à la place de 27 -->
-              <p>Livres</p>
+              <h3>27</h3> --><!-- TODO : afficher le nombre de livres ï¿½ la place de 27 -->
+              <!--<p>Livres</p>
             </div>
             <div class="icon">
               <ion-icon name="book"></ion-icon>
@@ -47,8 +49,8 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>1515</h3> <!-- TODO : afficher le nombre d'emprunts à la place de 1515 -->
-              <p>Emprunts</p>
+              <h3>1515</h3> --><!-- TODO : afficher le nombre d'emprunts ï¿½ la place de 1515 -->
+              <!--<p>Emprunts</p>
             </div>
             <div class="icon">
               <ion-icon name="bookmarks"></ion-icon>
@@ -72,21 +74,21 @@
                 
                     <tr>
                         <td>Titre du livre, <em>de Nom de l'auteur</em></td>
-                        <td>Prénom et nom du membre emprunteur</td>
+                        <td>Prï¿½nom et nom du membre emprunteur</td>
                         <td>Date de l'emprunt</td>
                         <td>
                             <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
                         </td>
                     </tr>
                     
-                     <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
-                </tbody>
+                  --><!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
+                <!--</tbody>
             </table>
           </div>
         </div>
       </div>
     </section>
   </main>
-  <jsp:include page='footer.jsp'></jsp:include>
+  <jsp:include page='footer.jsp'></jsp:include> -->
 </body>
 </html>

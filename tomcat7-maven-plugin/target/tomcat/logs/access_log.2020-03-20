@@ -1,2 +1,0 @@
-127.0.0.1 - - [20/Mar/2020:12:37:29 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 404 949 http-bio-8080-exec-1 25
-127.0.0.1 - - [20/Mar/2020:12:37:36 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 404 949 http-bio-8080-exec-2 2

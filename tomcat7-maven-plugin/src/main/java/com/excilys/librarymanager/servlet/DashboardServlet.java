@@ -12,7 +12,7 @@ import java.io.IOException;
 public class DashboardServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/View/dashboard.jsp").forward(request, response);
         }
         catch (IOException e) {
             throw new ServletException("Erreur : vtff");
