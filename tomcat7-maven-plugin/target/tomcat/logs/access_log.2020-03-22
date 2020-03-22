@@ -1,1 +1,11 @@
-127.0.0.1 - - [22/Mar/2020:15:02:24 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 200 6168 http-bio-8080-exec-1 1008
+127.0.0.1 - - [22/Mar/2020:17:42:22 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 200 6101 http-bio-8080-exec-1 1113
+127.0.0.1 - - [22/Mar/2020:17:42:25 +0100] "GET /tomcat7-maven-plugin/membre_list HTTP/1.1" 200 4509 http-bio-8080-exec-2 79
+127.0.0.1 - - [22/Mar/2020:17:42:31 +0100] "GET /tomcat7-maven-plugin/livre_list HTTP/1.1" 200 4352 http-bio-8080-exec-3 61
+127.0.0.1 - - [22/Mar/2020:17:42:35 +0100] "GET /tomcat7-maven-plugin/emprunt_list HTTP/1.1" 200 4633 http-bio-8080-exec-4 66
+127.0.0.1 - - [22/Mar/2020:17:42:40 +0100] "GET /tomcat7-maven-plugin/emprunt_return?id=idDeLEmprunt HTTP/1.1" 200 4778 http-bio-8080-exec-5 63
+127.0.0.1 - - [22/Mar/2020:17:42:43 +0100] "POST /LibraryManager/emprunt_return HTTP/1.1" 404 - http-bio-8080-exec-6 0
+127.0.0.1 - - [22/Mar/2020:17:42:45 +0100] "GET /tomcat7-maven-plugin/livre_list HTTP/1.1" 200 4352 http-bio-8080-exec-7 3
+127.0.0.1 - - [22/Mar/2020:17:42:48 +0100] "GET /tomcat7-maven-plugin/livre_details?id=idDuLivre HTTP/1.1" 200 6023 http-bio-8080-exec-8 98
+127.0.0.1 - - [22/Mar/2020:17:42:52 +0100] "GET /tomcat7-maven-plugin/livre_add HTTP/1.1" 200 4447 http-bio-8080-exec-9 59
+127.0.0.1 - - [22/Mar/2020:17:42:53 +0100] "GET /tomcat7-maven-plugin/emprunt_add HTTP/1.1" 200 4874 http-bio-8080-exec-10 61
+127.0.0.1 - - [22/Mar/2020:17:42:54 +0100] "GET /tomcat7-maven-plugin/emprunt_return HTTP/1.1" 200 4778 http-bio-8080-exec-10 2

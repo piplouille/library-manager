@@ -12,8 +12,6 @@
 </head>
 
 <body>
-  <h1>VOILA JE MAFFICHE</h1>
-  <!--
   <jsp:include page='menu.jsp'></jsp:include>
   <main>
     <section class="content">
@@ -25,8 +23,8 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>12</h3> --><!-- TODO : afficher le nombre de membres � la place de 12 -->
-              <!--<p>Membres</p>
+              <h3>12</h3><!-- TODO : afficher le nombre de membres � la place de 12 -->
+              <p>Membres</p>
             </div>
             <div class="icon">
             <ion-icon name="people"></ion-icon>
@@ -37,8 +35,8 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>27</h3> --><!-- TODO : afficher le nombre de livres � la place de 27 -->
-              <!--<p>Livres</p>
+              <h3>27</h3><!-- TODO : afficher le nombre de livres � la place de 27 -->
+              <p>Livres</p>
             </div>
             <div class="icon">
               <ion-icon name="book"></ion-icon>
@@ -49,8 +47,8 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>1515</h3> --><!-- TODO : afficher le nombre d'emprunts � la place de 1515 -->
-              <!--<p>Emprunts</p>
+              <h3>1515</h3><!-- TODO : afficher le nombre d'emprunts � la place de 1515 -->
+              <p>Emprunts</p>
             </div>
             <div class="icon">
               <ion-icon name="bookmarks"></ion-icon>
@@ -81,8 +79,8 @@
                         </td>
                     </tr>
                     
-                  --><!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
-                <!--</tbody>
+                  <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
+                </tbody>
             </table>
           </div>
         </div>
