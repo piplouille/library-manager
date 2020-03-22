@@ -1,7 +1,7 @@
 package com.excilys.librarymanager.servlet;
 
 import javax.servlet.http.*;
-import javax.servlet.*;
+import javax.servlet.http.HttpServlet;
 import java.util.*;
 import java.text.*;
 import java.io.*;
@@ -19,8 +19,6 @@ public class DashboardServlet extends HttpServlet {
         }
         catch (Exception e) {
             throw new IOException("help");
-        }
-        
+        }   
     }
-
 }
