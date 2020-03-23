@@ -25,7 +25,12 @@ public class DashboardServlet extends HttpServlet {
         try {
             MembreServiceImpl membre_service = MembreServiceImpl.getInstance();
             int id_membre = membre_service.create("Debesse", "Laetitia", "1 rue", "yo@ensta.fr", "06");
+            System.out.println(id_membre);
             List<Membre> liste = membre_service.getList();
+            for (int i = 0; i <liste.size() ; i++) {
+                System.out.println(liste.get(i).getNom());
+            }
+            Membre membre = membre_service.getById(id_membre);
             // int no_membres = membre_service.count();
             // request.setAttribute("no_membres", no_membres);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/dashboard.jsp");

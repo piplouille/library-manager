@@ -1,2 +1,2 @@
-127.0.0.1 - - [23/Mar/2020:12:46:04 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 200 6101 http-bio-8080-exec-1 1815
-127.0.0.1 - - [23/Mar/2020:12:46:04 +0100] "GET /tomcat7-maven-plugin/assets/css/custom.css HTTP/1.1" 304 - http-bio-8080-exec-2 5
+127.0.0.1 - - [23/Mar/2020:13:00:18 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 200 6101 http-bio-8080-exec-1 2114
+127.0.0.1 - - [23/Mar/2020:13:00:19 +0100] "GET /tomcat7-maven-plugin/assets/css/custom.css HTTP/1.1" 304 - http-bio-8080-exec-2 9

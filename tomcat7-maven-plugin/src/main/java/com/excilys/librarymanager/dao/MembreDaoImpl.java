@@ -93,23 +93,46 @@ public class MembreDaoImpl implements MembreDao {
      */
     public Membre getById(int id) throws DaoException {
         Membre membre = null;
+
+        ResultSet res = null;
+        Connection connection = null;
+        PreparedStatement getPreparedStatement = null;
+
+        String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre WHERE id = ?;";
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
-            String SelectQuery = "SELECT id, nom, prenom, adresse, email, telephone, abonnement FROM membre WHERE id = ?;";
-
-            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
-            ResultSet rs = getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
-            connection.close();
-            membre = new Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("adresse"),
-                    rs.getString("email"), rs.getString("telephone"), Abonnement.valueOf(rs.getString("abonnement")));
+            res = getPreparedStatement.executeQuery();
+            res.next();
+            membre = new Membre(res.getInt("id"), res.getString("nom"), res.getString("prenom"), res.getString("adresse"), res.getString("email"), res.getString("telephone"), Abonnement.valueOf(res.getString("abonnement")));
         } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                res.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }            
         }
         return membre;
     }
