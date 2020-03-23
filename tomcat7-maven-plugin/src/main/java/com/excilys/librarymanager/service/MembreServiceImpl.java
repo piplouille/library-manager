@@ -87,6 +87,42 @@ public class MembreServiceImpl implements MembreService {
     public int create(String nom, String prenom, String adresse, String email, String telephone) throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
         int id = -1;
+
+        try {
+            validationAdresse(adresse);
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationEmail(email);
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationNom(nom);
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationPrenom(prenom);
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationTelephone(telephone);
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
         try {
             id = dao_membre.create(nom.toUpperCase(), prenom, adresse, email, telephone);
         }
@@ -101,6 +137,42 @@ public class MembreServiceImpl implements MembreService {
      */
     public void update(Membre membre) throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+
+        try {
+            validationAdresse(membre.getAdresse());
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationEmail(membre.getEmail());
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationNom(membre.getNom());
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationPrenom(membre.getPrenom());
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        try {
+            validationTelephone(membre.getTelephone());
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
         try {
             dao_membre.update(membre);
         }
@@ -157,15 +229,18 @@ public class MembreServiceImpl implements MembreService {
     private void validationPrenom(String texte) throws Exception {
         if (texte == null) {
             throw new Exception("Saisir un prenom");
+        }
     }
 
     private void validationAdresse(String texte) throws Exception {
         if (texte == null) {
             throw new Exception("Saisir une adresse");
+        }
     }
 
     private void validationTelephone(String texte) throws Exception {
-        if (texte == null || ) {
+        if (texte == null || texte.length() > 10) {
             throw new Exception("Saisir un telephone valide");
+        }
     }
 }
