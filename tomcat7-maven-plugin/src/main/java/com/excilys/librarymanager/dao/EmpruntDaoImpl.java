@@ -37,14 +37,14 @@ public class EmpruntDaoImpl implements EmpruntDao {
 		List<Emprunt> liste = null;
 		Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs=null ;
 		try {
 			connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC;";
 
 			getPreparedStatement = connection.prepareStatement(SelectQuery);
-			ResultSet rs = getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
+			rs = getPreparedStatement.executeQuery();
 
 			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
@@ -72,13 +72,33 @@ public class EmpruntDaoImpl implements EmpruntDao {
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : liste des emprunts");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
 		return liste;
 
 	}
@@ -90,14 +110,16 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getListCurrent() throws DaoException {
 		List<Emprunt> liste = null;
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
-			ResultSet rs = getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
+			getPreparedStatement = connection.prepareStatement(SelectQuery);
+			rs = getPreparedStatement.executeQuery();
 
 			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
@@ -116,22 +138,38 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				if (abonnement == null) {
 					throw new SQLException();
 				}
-				Membre membre = new Membre(rs.getInt("idMembre"), rs.getString("nom"), rs.getString("prenom"),
-						rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
-				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
-						rs.getString("isbn"));
-
-				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
-						rs.getDate("dateRetour").toLocalDate()));
+				Membre membre = new Membre(rs.getInt("idMembre"), rs.getString("nom"), rs.getString("prenom"),rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
+				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),rs.getString("isbn"));
+				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : liste des emprunts en cours ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
 		return liste;
 
 	}
@@ -143,14 +181,16 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
 		List<Emprunt> liste = null;
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs=null ;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND membre.id = ?;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+			getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, idMembre);
-			ResultSet rs = getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
+			rs = getPreparedStatement.executeQuery();
 
 			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
@@ -178,13 +218,33 @@ public class EmpruntDaoImpl implements EmpruntDao {
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
-			connection.close();
 
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : liste des emprunts du membre " + idMembre);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
 		return liste;
 
 	}
@@ -196,14 +256,16 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getListCurrentByLivre(int idLivre) throws DaoException {
 		List<Emprunt> liste = null;
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs=null ;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND livre.id = ?;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+			getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, idLivre);
-			ResultSet rs = getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
+			rs = getPreparedStatement.executeQuery();
 
 			liste = new ArrayList<Emprunt>();
 			while (rs.next()) {
@@ -232,13 +294,32 @@ public class EmpruntDaoImpl implements EmpruntDao {
 
 			}
 
-			connection.close();
-
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : emprunts en cours du livre " + idLivre);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
 		return liste;
 	}
 
@@ -248,15 +329,18 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return Emprunt
 	 */
 	public Emprunt getById(int id) throws DaoException {
+		Emprunt emprunt=null;
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS idEmprunt, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour, FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE e.id = ?;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+			getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, id);
-			ResultSet rs = getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
+			rs = getPreparedStatement.executeQuery();
 			Abonnement abonnement = null;
 			switch (rs.getString("abonnement")) {
 				case "BASIC":
@@ -276,12 +360,33 @@ public class EmpruntDaoImpl implements EmpruntDao {
 					rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
 			Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 					rs.getString("isbn"));
-			connection.close();
-			return new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+			emprunt = new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
 					rs.getDate("dateRetour").toLocalDate());
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : Emprunt.getById !");
 		}
+		finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
+		return emprunt;
 	}
 
 	/**
@@ -290,12 +395,14 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return void
 	 */
 	public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws DaoException {
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
 			String InsertQuery = "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt, dateRetour) VALUES (?, ?, ?, ?);";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery);
+			getPreparedStatement = connection.prepareStatement(InsertQuery);
 			getPreparedStatement.setInt(1, idMembre);
 			getPreparedStatement.setInt(2, idLivre);
 			getPreparedStatement.setDate(3, Date.valueOf(dateEmprunt));
@@ -320,12 +427,26 @@ public class EmpruntDaoImpl implements EmpruntDao {
 */
 			getPreparedStatement.setDate(4, null);
 			getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
-			connection.close();
 		} catch (SQLException e) {
 			throw new DaoException(
 					"Erreur : Creation de l'emprunt de " + idLivre + " par " + idMembre + " le " + dateEmprunt);
 		}
+		finally {
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
 	}
 
 	/**
@@ -334,41 +455,81 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 * @return void
 	 */
 	public void update(Emprunt emprunt) throws DaoException {
-
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
 			String InsertQuery = "UPDATE emprunt SET idMembre = ?, idLivre = ?, dateEmprunt = ?, dateRetour = ? WHERE id = ?;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery);
+			getPreparedStatement = connection.prepareStatement(InsertQuery);
 			getPreparedStatement.setInt(1, emprunt.getMembre().getKey());
 			getPreparedStatement.setInt(2, emprunt.getLivre().getId());
 			getPreparedStatement.setDate(2, Date.valueOf(emprunt.getDateEmprunt()));
 			getPreparedStatement.setDate(3, Date.valueOf(emprunt.getDateRetour()));
 			getPreparedStatement.setInt(4, emprunt.getId());
 			getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
-			connection.close();
 		} catch (SQLException e) {
 			throw new DaoException(
 					"Erreur : Mise a jour de l'emprunt de " + emprunt.getLivre() + " par " + emprunt.getMembre());
 		}
+		finally {
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+        }
 	}
 
 	public int count() throws DaoException {
+		int count = -1;
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
 			String CountQuery = "SELECT COUNT(id) AS count FROM emprunt;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(CountQuery);
-			ResultSet rs = getPreparedStatement.executeQuery();
-			getPreparedStatement.close();
-			connection.close();
-			return rs.getInt(1);
+			getPreparedStatement = connection.prepareStatement(CountQuery);
+			rs = getPreparedStatement.executeQuery();
+			rs.next();
+			count = rs.getInt(1);
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : Comptage des emprunts");
 		}
+		finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
+		}
+		return count;
 	}
 
 }

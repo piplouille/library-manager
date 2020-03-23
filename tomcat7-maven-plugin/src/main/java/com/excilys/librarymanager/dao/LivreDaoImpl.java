@@ -29,23 +29,45 @@ public class LivreDaoImpl implements LivreDao {
      */
     public List<Livre> getList() throws DaoException {
         List<Livre> liste = new ArrayList<Livre>();
+        Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre;";
-            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
-            ResultSet rs = getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            rs = getPreparedStatement.executeQuery();
             while (rs.next()) {
                 liste.add(new Livre(rs.getInt("id"), rs.getString("titre"), rs.getString("auteur"),
                         rs.getString("isbn")));
             }
-            connection.close();
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : liste des livres");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
         return liste;
     };
@@ -57,23 +79,44 @@ public class LivreDaoImpl implements LivreDao {
      */
     public Livre getById(int id) throws DaoException {
         Livre livre = null;
+        Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre WHERE id = ?;";
-            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
-            ResultSet rs = getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
+            rs = getPreparedStatement.executeQuery();
 
             livre = new Livre(rs.getInt("id"), rs.getString("titre"), rs.getString("auteur"), rs.getString("isbn"));
-
-            connection.close();
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : livre par id");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
         return livre;
     }
@@ -84,28 +127,49 @@ public class LivreDaoImpl implements LivreDao {
      * @return int id du livre
      */
     public int create(String titre, String auteur, String isbn) throws DaoException {
-        int id = Integer.MAX_VALUE;
+        int id = -1;
+        Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
             String InsertQuery = "INSERT INTO livre(titre, auteur, isbn) VALUES (?, ?, ?);";
-            PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery,
+            getPreparedStatement = connection.prepareStatement(InsertQuery,
                     Statement.RETURN_GENERATED_KEYS);
             getPreparedStatement.setString(1, titre);
             getPreparedStatement.setString(2, auteur);
             getPreparedStatement.setString(3, isbn);
             getPreparedStatement.executeUpdate();
-            ResultSet resultSet = getPreparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                id = resultSet.getInt(1);
+            rs = getPreparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
             }
-            getPreparedStatement.close();
-            connection.close();
-
         } catch (SQLException e) {
             throw new DaoException("Erreur : Ajout du livre " + titre + " par " + auteur + " isbn : " + isbn);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
         return id;
     }
@@ -116,24 +180,40 @@ public class LivreDaoImpl implements LivreDao {
      * @return void
      */
     public void update(Livre livre) throws DaoException {
+        Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
             String UpdateQuery = "UPDATE livre SET titre = ?, auteur = ?, isbn = ? WHERE id = ?;";
-            PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
+            getPreparedStatement = connection.prepareStatement(UpdateQuery);
             getPreparedStatement.setString(1, livre.getTitre());
             getPreparedStatement.setString(2, livre.getAuteur());
             getPreparedStatement.setString(3, livre.getIsbn());
             getPreparedStatement.setInt(4, livre.getId());
             getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
-            connection.close();
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : Maj du livre " + livre.getTitre() + " par " + livre.getAuteur()
                     + " isbn : " + livre.getIsbn());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
     }
 
@@ -143,20 +223,36 @@ public class LivreDaoImpl implements LivreDao {
      * @return void
      */
     public void delete(int id) throws DaoException {
+        Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
             String UpdateQuery = "DELETE FROM livre WHERE id = ?;";
-            PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
+            getPreparedStatement = connection.prepareStatement(UpdateQuery);
             getPreparedStatement.setInt(1, id);
             getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
-            connection.close();
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : Suppression du livre d'id " + id);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
     }
 
@@ -166,21 +262,44 @@ public class LivreDaoImpl implements LivreDao {
      * @return int compte
      */
     public int count() throws DaoException {
-        int compte = Integer.MAX_VALUE;
+        int compte =-1;
+        Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
+		ResultSet rs =null;
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
             String UpdateQuery = "SELECT COUNT(id) AS count FROM livre;";
-            PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
-            ResultSet rs = getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
-            connection.close();
+            getPreparedStatement = connection.prepareStatement(UpdateQuery);
+            rs = getPreparedStatement.executeQuery();
+            rs.next();
             compte = rs.getInt(1);
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : Comptage des livres");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
         return compte;
     }

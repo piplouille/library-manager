@@ -1,4 +1,9 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%int no_membres = (Integer) request.getAttribute("no_membres");%>
+<%int no_emprunts = (Integer) request.getAttribute("no_emprunts");%>
+<%int no_livres = (Integer) request.getAttribute("no_livres");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +28,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>12</h3><!-- TODO : afficher le nombre de membres � la place de 12 -->
+              <h3><%= no_membres %></h3>
               <p>Membres</p>
             </div>
             <div class="icon">
@@ -35,7 +40,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>27</h3><!-- TODO : afficher le nombre de livres � la place de 27 -->
+              <h3><%= no_livres %></h3>
               <p>Livres</p>
             </div>
             <div class="icon">
@@ -47,7 +52,7 @@
         <div class="col l4 s6">
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>1515</h3><!-- TODO : afficher le nombre d'emprunts � la place de 1515 -->
+              <h3><%= no_emprunts %></h3>
               <p>Emprunts</p>
             </div>
             <div class="icon">
