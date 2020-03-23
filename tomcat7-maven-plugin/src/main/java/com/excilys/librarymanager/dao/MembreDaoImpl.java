@@ -241,21 +241,37 @@ public class MembreDaoImpl implements MembreDao {
      * @brief Supprime un membre de la BDD à partir de son id
      */
     public void delete(int id) throws DaoException {
+        Connection connection = null;
+        PreparedStatement getPreparedStatement = null;
+
+        String SelectQuery = "DELETE FROM membre WHERE id = ?;";
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
-            String SelectQuery = "DELETE FROM membre WHERE id = ?;";
-
-            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
-            getPreparedStatement.executeQuery();
+            getPreparedStatement.executeUpdate();
             getPreparedStatement.close();
-            connection.close();
         } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }               
         }
     }
 
