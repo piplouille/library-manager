@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class LivreListServlet extends HttpServlet {
     /*
-    Une méthode :
+    Une methode :
     doGet() : afficher livres
     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

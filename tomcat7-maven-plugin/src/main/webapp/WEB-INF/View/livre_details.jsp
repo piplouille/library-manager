@@ -1,9 +1,10 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 <%@page import="com.excilys.librarymanager.model.Livre"%>
+<%@page import="com.excilys.librarymanager.model.Emprunt"%>
 <%@page import="java.util.List"%>
 <%Livre livre = (Livre) request.getAttribute("livre");%>
-<%List<Livre> liste_emprunts = (Livre) request.getAttribute("liste_emprunts_en_cours");%>
+<%List<Emprunt> liste_emprunts = (List<Emprunt>) request.getAttribute("liste_emprunts_en_cours");%>
 
 <!DOCTYPE html>
 <html>

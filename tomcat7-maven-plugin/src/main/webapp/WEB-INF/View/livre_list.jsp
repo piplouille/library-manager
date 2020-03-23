@@ -1,4 +1,9 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%@page import="com.excilys.librarymanager.model.Livre"%>
+<%@page import="java.util.List"%>
+<%List<Livre> liste_livres = (Livre) request.getAttribute("liste_livres");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,10 +32,19 @@
                         <th>Titre</th>
                         <th>Auteur</th>
                         <th>Code ISBN 13</th>
-                        <th>Détails</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
+                  <c:forEach items="${liste_livres}" var="livre">
+                    <tr>
+                        <td>${emprunt.getMembre().getPrenom()} ${emprunt.getMembre().getNom()}</td>
+                        <td>${emprunt.getDateEmprunt()}</td>
+                        <td>
+                            <a href="emprunt_return?id=${emprunt.getId()}"><ion-icon class="table-item" name="log-in"></a>
+                        </td>
+                    </tr>
+                  </c:forEach>
                 
                     <tr>
                         <td>Titre du livre</td>

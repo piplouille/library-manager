@@ -60,7 +60,7 @@ public class LivreAddServlet extends HttpServlet {
         }
 
         //Redirection
-        response.sendRedirect("tomcat7-maven-plugin/livre_details?id="+id);
+        response.sendRedirect("/tomcat7-maven-plugin/livre_details?id="+id);
 
         // RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_add.jsp");
         // dispatcher.forward(request, response);
