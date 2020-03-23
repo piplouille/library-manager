@@ -2,7 +2,7 @@
 
 <%@page import="com.excilys.librarymanager.model.Livre"%>
 <%@page import="java.util.List"%>
-<%List<Livre> liste_livres = (Livre) request.getAttribute("liste_livres");%>
+<%List<Livre> liste_livres = (List<Livre>) request.getAttribute("liste_livres");%>
 
 <!DOCTYPE html>
 <html>
@@ -38,22 +38,14 @@
                 <tbody>
                   <c:forEach items="${liste_livres}" var="livre">
                     <tr>
-                        <td>${emprunt.getMembre().getPrenom()} ${emprunt.getMembre().getNom()}</td>
-                        <td>${emprunt.getDateEmprunt()}</td>
-                        <td>
-                            <a href="emprunt_return?id=${emprunt.getId()}"><ion-icon class="table-item" name="log-in"></a>
-                        </td>
+                        <td>${livre.getTitre()}</td>
+                        <td>${livre.getAuteur()}</td>
+                        <td>${livre.getIsbn()}</td>
+                        <td class="center"><a href="livre_details?id=${livre.getId()}"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
                     </tr>
                   </c:forEach>
-                
-                    <tr>
-                        <td>Titre du livre</td>
-                        <td>Nom de l'auteur</td>
-                        <td>ISBN du livre</td>
-                        <td class="center"><a href="livre_details?id=idDuLivre"><ion-icon class="details" name="information-circle-outline"></ion-icon></a></td>
-                    </tr>
                     
-                    <!-- TODO : parcourir la liste des livres et les afficher selon la structure d'exemple ci-dessus -->
+                    <!-- DONE : parcourir la liste des livres et les afficher selon la structure d'exemple ci-dessus -->
                 </tbody>
             </table>
           </div>

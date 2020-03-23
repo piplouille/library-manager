@@ -41,8 +41,8 @@ public class MembreAddServlet extends HttpServlet {
         String email = request.getParameter("email");
         String telephone = request.getParameter("telephone");
 
-        //Creation du livre
-        int id =-1;
+        //Creation du membre
+        int id = -1;
         try{
             id = membre_service.create(nom, prenom, adresse, email, telephone);
         } catch (ServiceException e)

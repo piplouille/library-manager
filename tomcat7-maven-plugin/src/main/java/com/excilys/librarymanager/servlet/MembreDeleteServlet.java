@@ -20,7 +20,13 @@ public class MembreDeleteServlet extends HttpServlet {
     doPost() : traiter formulaire suppression membre, si pb : ServletException
     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // On va récupérer l'id de l'url
+        
+
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/membre_delete.jsp");
         dispatcher.forward(request, response);
     }
+
+    
 }
