@@ -198,12 +198,14 @@ public class MembreDaoImpl implements MembreDao {
      * @brief Met à jour un membre de la BDD
      */
     public void update(Membre membre) throws DaoException {
+        Connection connection = null;
+        PreparedStatement getPreparedStatement = null;
+        
+        String SelectQuery = "UPDATE membre SET nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, abonnement = ? WHERE id = ?;";
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
-            String SelectQuery = "UPDATE membre SET nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, abonnement = ? WHERE id = ?;";
-
-            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setString(1, membre.getNom());
             getPreparedStatement.setString(2, membre.getPrenom());
             getPreparedStatement.setString(3, membre.getAdresse());
@@ -211,14 +213,27 @@ public class MembreDaoImpl implements MembreDao {
             getPreparedStatement.setString(5, membre.getTelephone());
             getPreparedStatement.setString(6, membre.getAbonnement().name());
             getPreparedStatement.setInt(7, membre.getKey());
-            getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
-            connection.close();
+            getPreparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }            
         }
     }
 
