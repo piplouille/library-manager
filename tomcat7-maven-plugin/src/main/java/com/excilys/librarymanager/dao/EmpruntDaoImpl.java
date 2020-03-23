@@ -68,7 +68,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+				liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
 						rs.getDate("dateRetour").toLocalDate()));
 
 			}
@@ -214,8 +214,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
-						rs.getDate("dateRetour").toLocalDate()));
+				liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate()));
 
 			}
 
@@ -256,6 +255,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getListCurrentByLivre(int idLivre) throws DaoException {
 		List<Emprunt> liste = null;
+
 		Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
 		ResultSet rs=null ;
@@ -289,8 +289,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
 
-				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
-						rs.getDate("dateRetour").toLocalDate()));
+				liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate()));
 
 			}
 

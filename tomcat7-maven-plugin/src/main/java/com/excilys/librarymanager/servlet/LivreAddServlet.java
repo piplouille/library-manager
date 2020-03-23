@@ -33,17 +33,6 @@ public class LivreAddServlet extends HttpServlet {
         try{
             LivreServiceImpl livre_service = LivreServiceImpl.getInstance();
 
-            int id_livre = livre_service.create("Le Petit Prince", "Antoine de St Exupery", "9791187192596");
-            Livre livre = livre_service.getById(id_livre);
-            livre.setTitre("Vol de nuit");
-            livre_service.update(livre);
-            List<Livre> liste = livre_service.getList();
-            System.out.println(liste.size());
-            livre_service.delete(livre.getId());
-            liste = livre_service.getList();
-            System.out.println(liste.size());
-            System.out.println(livre_service.count());
-            
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_add.jsp");
             dispatcher.forward(request, response);
         }
@@ -64,4 +53,15 @@ List<Livre> liste = livre_service.getList();
 for (int i = 0; i <liste.size() ; i++) {
     System.out.println(liste.get(i).getTitre());
 }
+Livre livre = livre_service.getById(id_livre);
+livre.setTitre("Vol de nuit");
+livre_service.update(livre);
+List<Livre> liste = livre_service.getList();
+System.out.println(liste.size());
+livre_service.delete(livre.getId());
+liste = livre_service.getList();
+System.out.println(liste.size());
+System.out.println(livre_service.count());
+List<Livre> liste = livre_service.getListDispo();
+System.out.println(liste.size());
 */

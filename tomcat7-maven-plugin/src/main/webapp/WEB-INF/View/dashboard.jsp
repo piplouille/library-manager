@@ -79,20 +79,16 @@
                     </tr>
                 </thead>
                 <tbody id="results">
-                
-                    <tr>
-                        <td>Titre du livre, <em>de Nom de l'auteur</em></td>
-                        <td>Pr�nom et nom du membre emprunteur</td>
-                        <td>Date de l'emprunt</td>
-                        <td>
-                            <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
-                        </td>
-                    </tr>
-
                     <c:forEach items="${liste_emprunts}" var="emprunt">
-                      <p>${emprunt.getLivre().getTitre()}</p>
+                      <tr>
+                          <td>${emprunt.getLivre().getTitre()}, <em>de ${emprunt.getLivre().getAuteur()}</em></td>
+                          <td>${emprunt.getMembre().getPrenom()} ${emprunt.getMembre().getNom()}</td>
+                          <td>${emprunt.getDateEmprunt()}</td>
+                          <td>
+                              <a href="emprunt_return?id=${emprunt.getId()}"><ion-icon class="table-item" name="log-in"></a>
+                          </td>
+                      </tr>
                     </c:forEach>
-                  <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
                 </tbody>
             </table>
           </div>

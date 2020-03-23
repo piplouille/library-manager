@@ -183,15 +183,17 @@ public class EmpruntServiceImpl implements EmpruntService
         {
             throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE INVALIDE");
         }
+        int result = -1;
         try{
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             // renvoie listes des emprunts en cours
             List<Emprunt> emprunts = dao.getListCurrentByLivre(idLivre);
-            return emprunts.isEmpty();
+            result = emprunts.size();
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt si livre dispo");
         }
+        return (result == 0);
     }
 
     /**
