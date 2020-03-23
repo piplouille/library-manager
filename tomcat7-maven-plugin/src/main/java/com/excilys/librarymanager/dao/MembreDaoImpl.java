@@ -279,22 +279,46 @@ public class MembreDaoImpl implements MembreDao {
      * @brief Retourne le nombre de membres de la BDD
      */
     public int count() throws DaoException {
-        int count = Integer.MAX_VALUE;
+        int count = -1;
+
+        ResultSet res = null;
+        Connection connection = null;
+        PreparedStatement getPreparedStatement = null;
+
+        String SelectQuery = "SELECT COUNT(id) AS count FROM membre;";
         try {
-            Connection connection = ConnectionManager.getConnection();
+            connection = ConnectionManager.getConnection();
 
-            String SelectQuery = "SELECT COUNT(id) AS count FROM membre;";
-
-            PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
-            ResultSet rs = getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
-            connection.close();
-            count = rs.getInt("");
+            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            res = getPreparedStatement.executeQuery();
+            res.next();
+            count = res.getInt(1);
         } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getById()");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                res.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                connection.close();
+            }
+            catch (Exception e) {
+                System.out.println("Exception Message " + e.getLocalizedMessage());
+            }
         }
         return count;
     }

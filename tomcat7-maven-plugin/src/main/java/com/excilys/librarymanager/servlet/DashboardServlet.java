@@ -38,6 +38,7 @@ public class DashboardServlet extends HttpServlet {
             membre_service.delete(membre.getKey());
             liste = membre_service.getList();
             System.out.println(liste.size());
+            System.out.println(membre_service.count());
             // int no_membres = membre_service.count();
             // request.setAttribute("no_membres", no_membres);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/dashboard.jsp");

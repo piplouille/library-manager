@@ -35,12 +35,14 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getList() throws DaoException {
 		List<Emprunt> liste = null;
+		Connection connection = null;
+		PreparedStatement getPreparedStatement = null ;
 		try {
-			Connection connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC;";
 
-			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
+			getPreparedStatement = connection.prepareStatement(SelectQuery);
 			ResultSet rs = getPreparedStatement.executeQuery();
 			getPreparedStatement.close();
 
