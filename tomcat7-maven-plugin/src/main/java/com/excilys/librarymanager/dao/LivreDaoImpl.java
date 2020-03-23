@@ -4,7 +4,8 @@ import com.excilys.librarymanager.model.*;
 import com.excilys.librarymanager.exception.DaoException;
 
 import java.sql.*;
-import com.excilys.librarymanager.utils.*;
+import com.excilys.librarymanager.utils.FillDatabase;
+import com.excilys.librarymanager.persistence.ConnectionManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class LivreDaoImpl implements LivreDao {
     public List<Livre> getList() throws DaoException {
         List<Livre> liste = new ArrayList<Livre>();
         try {
-            Connection connection = EstablishConnection.getConnection();
+            Connection connection = ConnectionManager.getConnection();
 
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre;";
             PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
@@ -57,7 +58,7 @@ public class LivreDaoImpl implements LivreDao {
     public Livre getById(int id) throws DaoException {
         Livre livre = null;
         try {
-            Connection connection = EstablishConnection.getConnection();
+            Connection connection = ConnectionManager.getConnection();
 
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre WHERE id = ?;";
             PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
@@ -85,7 +86,7 @@ public class LivreDaoImpl implements LivreDao {
     public int create(String titre, String auteur, String isbn) throws DaoException {
         int id = Integer.MAX_VALUE;
         try {
-            Connection connection = EstablishConnection.getConnection();
+            Connection connection = ConnectionManager.getConnection();
 
             String InsertQuery = "INSERT INTO livre(titre, auteur, isbn) VALUES (?, ?, ?);";
             PreparedStatement getPreparedStatement = connection.prepareStatement(InsertQuery,
@@ -116,7 +117,7 @@ public class LivreDaoImpl implements LivreDao {
      */
     public void update(Livre livre) throws DaoException {
         try {
-            Connection connection = EstablishConnection.getConnection();
+            Connection connection = ConnectionManager.getConnection();
 
             String UpdateQuery = "UPDATE livre SET titre = ?, auteur = ?, isbn = ? WHERE id = ?;";
             PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
@@ -143,7 +144,7 @@ public class LivreDaoImpl implements LivreDao {
      */
     public void delete(int id) throws DaoException {
         try {
-            Connection connection = EstablishConnection.getConnection();
+            Connection connection = ConnectionManager.getConnection();
 
             String UpdateQuery = "DELETE FROM livre WHERE id = ?;";
             PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);
@@ -167,7 +168,7 @@ public class LivreDaoImpl implements LivreDao {
     public int count() throws DaoException {
         int compte = Integer.MAX_VALUE;
         try {
-            Connection connection = EstablishConnection.getConnection();
+            Connection connection = ConnectionManager.getConnection();
 
             String UpdateQuery = "SELECT COUNT(id) AS count FROM livre;";
             PreparedStatement getPreparedStatement = connection.prepareStatement(UpdateQuery);

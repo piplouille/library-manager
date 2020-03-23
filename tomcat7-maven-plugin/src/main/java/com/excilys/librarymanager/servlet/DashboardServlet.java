@@ -11,10 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import com.excilys.librarymanager.exception.ServiceException;
+
+import com.excilys.librarymanager.service.MembreServiceImpl;
+import com.excilys.librarymanager.dao.MembreDaoImpl;
+
 public class DashboardServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/dashboard.jsp");
-        dispatcher.forward(request, response);
-        // this.getServletContext().getRequestDispatcher("/WEB-INF/View/dashboard.jsp").forward(request, response);
+        try {
+            MembreServiceImpl membre_service = MembreServiceImpl.getInstance();
+            int id_membre = membre_service.create("Debesse", "Laetitia", "1 rue", "yo@ensta.fr", "06");
+            System.out.println(id_membre);
+            // int no_membres = membre_service.count();
+            // request.setAttribute("no_membres", no_membres);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/dashboard.jsp");
+            dispatcher.forward(request, response);
+        }
+        catch (ServiceException e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
     }
 }

@@ -7,7 +7,8 @@ import com.excilys.librarymanager.model.Livre;
 import com.excilys.librarymanager.exception.DaoException;
 
 import java.sql.*;
-import com.excilys.librarymanager.utils.*;
+import com.excilys.librarymanager.utils.FillDatabase;
+import com.excilys.librarymanager.persistence.ConnectionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	public List<Emprunt> getList() throws DaoException {
 		List<Emprunt> liste = null;
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC;";
 
@@ -88,7 +89,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	public List<Emprunt> getListCurrent() throws DaoException {
 		List<Emprunt> liste = null;
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL;";
 
@@ -141,7 +142,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
 		List<Emprunt> liste = null;
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND membre.id = ?;";
 
 			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
@@ -194,7 +195,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	public List<Emprunt> getListCurrentByLivre(int idLivre) throws DaoException {
 		List<Emprunt> liste = null;
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE dateRetour IS NULL AND livre.id = ?;";
 
 			PreparedStatement getPreparedStatement = connection.prepareStatement(SelectQuery);
@@ -246,7 +247,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public Emprunt getById(int id) throws DaoException {
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 
 			String SelectQuery = "SELECT e.id AS idEmprunt, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour, FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre WHERE e.id = ?;";
 
@@ -288,7 +289,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public void create(int idMembre, int idLivre, LocalDate dateEmprunt) throws DaoException {
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 
 			String InsertQuery = "INSERT INTO emprunt(idMembre, idLivre, dateEmprunt, dateRetour) VALUES (?, ?, ?, ?);";
 
@@ -333,7 +334,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	public void update(Emprunt emprunt) throws DaoException {
 
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 
 			String InsertQuery = "UPDATE emprunt SET idMembre = ?, idLivre = ?, dateEmprunt = ?, dateRetour = ? WHERE id = ?;";
 
@@ -354,7 +355,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 
 	public int count() throws DaoException {
 		try {
-			Connection connection = EstablishConnection.getConnection();
+			Connection connection = ConnectionManager.getConnection();
 
 			String CountQuery = "SELECT COUNT(id) AS count FROM emprunt;";
 

@@ -6,7 +6,6 @@ com/excilys/librarymanager/servlet/LivreListServlet.class
 com/excilys/librarymanager/service/EmpruntService.class
 com/excilys/librarymanager/dao/MembreDao.class
 com/excilys/librarymanager/dao/EmpruntDao.class
-com/excilys/librarymanager/utils/EstablishConnection.class
 com/excilys/librarymanager/model/Emprunt.class
 com/excilys/librarymanager/test/ServiceTest.class
 com/excilys/librarymanager/service/MembreServiceImpl.class
