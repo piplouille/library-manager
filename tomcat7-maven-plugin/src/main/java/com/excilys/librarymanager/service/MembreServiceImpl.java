@@ -88,7 +88,7 @@ public class MembreServiceImpl implements MembreService {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
         int id = -1;
         try {
-            id = dao_membre.create(nom, prenom, adresse, email, telephone);
+            id = dao_membre.create(nom.toUpperCase(), prenom, adresse, email, telephone);
         }
         catch (DaoException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
@@ -135,5 +135,37 @@ public class MembreServiceImpl implements MembreService {
             System.out.println("Exception Message " + e.getLocalizedMessage());
         }
         return nombre;
+    }
+
+    private void validationEmail(String email) throws Exception {
+        if (email != null && email.trim().length() != 0) {
+            if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
+                throw new Exception("Adresse email non valide");
+            }
+        }
+        else {
+            throw new Exception("Saisir adresse mail");
+        }
+    }
+
+    private void validationNom(String texte) throws Exception {
+        if (texte == null) {
+            throw new Exception("Saisir un nom");
+        }
+    }
+
+    private void validationPrenom(String texte) throws Exception {
+        if (texte == null) {
+            throw new Exception("Saisir un prenom");
+    }
+
+    private void validationAdresse(String texte) throws Exception {
+        if (texte == null) {
+            throw new Exception("Saisir une adresse");
+    }
+
+    private void validationTelephone(String texte) throws Exception {
+        if (texte == null || ) {
+            throw new Exception("Saisir un telephone valide");
     }
 }

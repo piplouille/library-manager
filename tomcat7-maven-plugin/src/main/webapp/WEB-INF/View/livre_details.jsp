@@ -21,7 +21,7 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Détails du livre n°${livre.id}</h5>
+      <h5>Details du livre numero {livre.id}</h5>
         <div class="row">
 	      <form action="/LibraryManager/livre_details?id=idDuLivre" method="post" class="col s12"> <!-- TODO : remplacer idDuLivre par l'id du livre -->
 	        <div class="row">
@@ -68,7 +68,7 @@
               <tbody id="results">
 
                 <tr>
-                  <td>Prénom et nom du membre emprunteur</td>
+                  <td>Prï¿½nom et nom du membre emprunteur</td>
                   <td>Date de l'emprunt</td>
                   <td>
                     <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
