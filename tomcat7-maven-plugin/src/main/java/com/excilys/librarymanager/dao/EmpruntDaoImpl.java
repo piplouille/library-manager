@@ -67,9 +67,13 @@ public class EmpruntDaoImpl implements EmpruntDao {
 						rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
 						rs.getString("isbn"));
-
-				liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
-						rs.getDate("dateRetour").toLocalDate()));
+				if (rs.getDate("dateRetour") == null) {
+					liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate()));					
+				}
+				else {
+					liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
+							(rs.getDate("dateRetour").toLocalDate())));
+				}
 
 			}
 

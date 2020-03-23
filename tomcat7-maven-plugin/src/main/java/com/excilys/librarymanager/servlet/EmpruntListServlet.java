@@ -32,12 +32,12 @@ public class EmpruntListServlet extends HttpServlet {
         List<Emprunt> liste = null;
         try{
             //Si show=all, on affiche tous les emprunts
-            if(show=="all")
+            if(show.equals("all"))
             {
                 liste = emprunt_service.getList();
             }
             //Sinon on n'affiche que les emprunts en cours
-            else{
+            else if (show == null) {
                 liste = emprunt_service.getListCurrent();
             }
             
