@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,7 @@ public class MembreDaoImpl implements MembreDao {
         try {
             connection = ConnectionManager.getConnection();
 
-            getPreparedStatement = connection.prepareStatement(SelectQuery);
+            getPreparedStatement = connection.prepareStatement(SelectQuery, Statement.RETURN_GENERATED_KEYS);
             getPreparedStatement.setString(1, nom);
             getPreparedStatement.setString(2, prenom);
             getPreparedStatement.setString(3, adresse);
