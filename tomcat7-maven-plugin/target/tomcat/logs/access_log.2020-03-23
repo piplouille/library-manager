@@ -1,2 +1,4 @@
-127.0.0.1 - - [23/Mar/2020:14:08:25 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 200 5910 http-bio-8080-exec-1 1573
-127.0.0.1 - - [23/Mar/2020:14:08:26 +0100] "GET /tomcat7-maven-plugin/assets/css/custom.css HTTP/1.1" 304 - http-bio-8080-exec-2 9
+127.0.0.1 - - [23/Mar/2020:14:41:19 +0100] "GET /tomcat7-maven-plugin/livre_add HTTP/1.1" 200 4447 http-bio-8080-exec-1 1987
+127.0.0.1 - - [23/Mar/2020:14:41:19 +0100] "GET /tomcat7-maven-plugin/assets/css/custom.css HTTP/1.1" 304 - http-bio-8080-exec-2 4
+127.0.0.1 - - [23/Mar/2020:14:41:27 +0100] "GET /tomcat7-maven-plugin/dashboard HTTP/1.1" 200 6123 http-bio-8080-exec-3 419
+127.0.0.1 - - [23/Mar/2020:14:41:27 +0100] "GET /tomcat7-maven-plugin/assets/css/custom.css HTTP/1.1" 304 - http-bio-8080-exec-4 1

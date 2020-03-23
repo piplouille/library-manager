@@ -1,8 +1,13 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
+<%@page import="com.excilys.librarymanager.model.Emprunt"%>
+<%@page import="com.excilys.librarymanager.model.Livre"%>
+<%@page import="java.util.ArrayList"%>
+
 <%int no_membres = (Integer) request.getAttribute("no_membres");%>
 <%int no_emprunts = (Integer) request.getAttribute("no_emprunts");%>
 <%int no_livres = (Integer) request.getAttribute("no_livres");%>
+<%ArrayList<Emprunt> liste_emprunts = (ArrayList<Emprunt>) request.getAttribute("liste_emprunts");%>
 
 <!DOCTYPE html>
 <html>
@@ -83,7 +88,10 @@
                             <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
                         </td>
                     </tr>
-                    
+
+                    <c:forEach items="${liste_emprunts}" var="emprunt">
+                      <p>${emprunt.getLivre().getTitre()}</p>
+                    </c:forEach>
                   <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
                 </tbody>
             </table>

@@ -110,6 +110,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getListCurrent() throws DaoException {
 		List<Emprunt> liste = null;
+
 		Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
 		ResultSet rs =null;
@@ -140,8 +141,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 				}
 				Membre membre = new Membre(rs.getInt("idMembre"), rs.getString("nom"), rs.getString("prenom"),rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
 				Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),rs.getString("isbn"));
-				liste.add(new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),rs.getDate("dateRetour").toLocalDate()));
-
+				liste.add(new Emprunt(rs.getInt("id"), membre, livre, rs.getDate("dateEmprunt").toLocalDate()));
 			}
 
 		} catch (SQLException e) {
@@ -426,7 +426,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			// }
 */
 			getPreparedStatement.setDate(4, null);
-			getPreparedStatement.executeQuery();
+			getPreparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(
 					"Erreur : Creation de l'emprunt de " + idLivre + " par " + idMembre + " le " + dateEmprunt);
@@ -468,7 +468,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement.setDate(2, Date.valueOf(emprunt.getDateEmprunt()));
 			getPreparedStatement.setDate(3, Date.valueOf(emprunt.getDateRetour()));
 			getPreparedStatement.setInt(4, emprunt.getId());
-			getPreparedStatement.executeQuery();
+			getPreparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(
 					"Erreur : Mise a jour de l'emprunt de " + emprunt.getLivre() + " par " + emprunt.getMembre());

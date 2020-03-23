@@ -28,19 +28,18 @@ public class LivreDaoImpl implements LivreDao {
      * @return List<Livre> liste des livres
      */
     public List<Livre> getList() throws DaoException {
-        List<Livre> liste = new ArrayList<Livre>();
+        List<Livre> liste = null;
         Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
 		ResultSet rs =null;
         try {
             connection = ConnectionManager.getConnection();
-
+            liste = new ArrayList<Livre>();
             String SelectQuery = "SELECT id, titre, auteur, isbn FROM livre;";
             getPreparedStatement = connection.prepareStatement(SelectQuery);
             rs = getPreparedStatement.executeQuery();
             while (rs.next()) {
-                liste.add(new Livre(rs.getInt("id"), rs.getString("titre"), rs.getString("auteur"),
-                        rs.getString("isbn")));
+                liste.add(new Livre(rs.getInt("id"), rs.getString("titre"), rs.getString("auteur"),rs.getString("isbn")));
             }
 
         } catch (SQLException e) {
@@ -79,6 +78,7 @@ public class LivreDaoImpl implements LivreDao {
      */
     public Livre getById(int id) throws DaoException {
         Livre livre = null;
+
         Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
 		ResultSet rs =null;
@@ -89,7 +89,7 @@ public class LivreDaoImpl implements LivreDao {
             getPreparedStatement = connection.prepareStatement(SelectQuery);
             getPreparedStatement.setInt(1, id);
             rs = getPreparedStatement.executeQuery();
-
+            rs.next();
             livre = new Livre(rs.getInt("id"), rs.getString("titre"), rs.getString("auteur"), rs.getString("isbn"));
 
         } catch (SQLException e) {
@@ -191,7 +191,7 @@ public class LivreDaoImpl implements LivreDao {
             getPreparedStatement.setString(2, livre.getAuteur());
             getPreparedStatement.setString(3, livre.getIsbn());
             getPreparedStatement.setInt(4, livre.getId());
-            getPreparedStatement.executeQuery();
+            getPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : Maj du livre " + livre.getTitre() + " par " + livre.getAuteur()
@@ -231,7 +231,7 @@ public class LivreDaoImpl implements LivreDao {
             String UpdateQuery = "DELETE FROM livre WHERE id = ?;";
             getPreparedStatement = connection.prepareStatement(UpdateQuery);
             getPreparedStatement.setInt(1, id);
-            getPreparedStatement.executeQuery();
+            getPreparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new DaoException("Erreur : Suppression du livre d'id " + id);
