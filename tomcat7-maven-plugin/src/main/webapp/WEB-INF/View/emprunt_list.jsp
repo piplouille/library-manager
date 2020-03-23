@@ -1,4 +1,11 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%@page import="com.excilys.librarymanager.model.Emprunt"%>
+<%@page import="com.excilys.librarymanager.model.Livre"%>
+<%@page import="com.excilys.librarymanager.model.Membre"%>
+<%@page import="java.util.List"%>
+<%List<Emprunt> liste = (List<Emprunt>) request.getAttribute("liste_emprunts");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,18 +39,26 @@
                     </tr>
                 </thead>
                 <tbody id="results">
-                
+                  <c:forEach items="${liste}" var="emprunt">
                     <tr>
-                        <td>Titre du livre, <em>de Nom de l'auteur</em></td>
-                        <td>Prénom et nom du membre emprunteur</td>
-                        <td>Date de l'emprunt</td>
+                        <td>${emprunt.getLivre().getTitre()}, <em>de ${emprunt.getLivre().getAuteur()}</em></td>
+                        <td>${emprunt.getMembre().getPrenom()} ${emprunt.getMembre().getNom()}</td>
+                        <td>${emprunt.getDateEmprunt()}</td>
                         <td>
-                            <a href="emprunt_return?id=idDeLEmprunt"><ion-icon class="table-item" name="log-in"></a>
+                          <c:choose>
+                            <c:when test = "${empty emprunt.getDateRetour()}">
+                              <a href="emprunt_return?id=${emprunt.getId()}"><ion-icon class="table-item" name="log-in"></a>
+                            </c:when>
+                            <c:otherwise>
+                              ${emprunt.getDateRetour()}
+                            </c:otherwise>
+                          </c:choose>
                         </td>
                     </tr>
+                  </c:forEach>
 
-					 <!-- TODO : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
-					 <!-- TODO : dans le champ "retour", afficher la date de retour si elle existe, et un lien vers la page de retour si la date est vide (comme dans l'exemple ci-dessus) -->
+					 <!-- DONE : parcourir la liste des emprunts en cours et les afficher selon la structure d'exemple ci-dessus -->
+					 <!-- DONE : dans le champ "retour", afficher la date de retour si elle existe, et un lien vers la page de retour si la date est vide (comme dans l'exemple ci-dessus) -->
                 </tbody>
             </table>
           </div>

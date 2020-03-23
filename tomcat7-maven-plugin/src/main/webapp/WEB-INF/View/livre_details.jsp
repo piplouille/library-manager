@@ -2,6 +2,7 @@
 
 <%@page import="com.excilys.librarymanager.model.Livre"%>
 <%@page import="com.excilys.librarymanager.model.Emprunt"%>
+<%@page import="com.excilys.librarymanager.model.Membre"%>
 <%@page import="java.util.List"%>
 <%Livre livre = (Livre) request.getAttribute("livre");%>
 <%List<Emprunt> liste_emprunts = (List<Emprunt>) request.getAttribute("liste_emprunts_en_cours");%>

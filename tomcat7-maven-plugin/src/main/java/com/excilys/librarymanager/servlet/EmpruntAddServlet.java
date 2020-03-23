@@ -21,6 +21,8 @@ import java.util.List;
 
 import java.io.IOException;
 
+import java.time.LocalDate;
+
 public class EmpruntAddServlet extends HttpServlet {
     /*
     Deux mehodes :
@@ -64,16 +66,20 @@ public class EmpruntAddServlet extends HttpServlet {
         int idLivre = Integer.parseInt(request.getParameter("idLivre"));
         int idMembre = Integer.parseInt(request.getParameter("idMembre"));
 
-        //Recuperation du livre et du membre
+        //Recuperation du livre et du membre, creation de l'emprunt
         Livre livre = null;
         Membre membre = null;
+        Emprunt emprunt = null ;
         try{
             livre = livre_service.getById(idLivre);
             membre = membre_service.getById(idMembre);
+            emprunt_service.create(idMembre, idLivre, LocalDate.now());
         }catch (ServiceException e)
         {
-            throw new ServletException();
             System.out.println("Exception Message " + e.getLocalizedMessage());
+            throw new ServletException();
         }
+
+        response.sendRedirect("/tomcat7-maven-plugin/emprunt_list");
     }
 }

@@ -181,6 +181,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public List<Emprunt> getListCurrentByMembre(int idMembre) throws DaoException {
 		List<Emprunt> liste = null;
+		
 		Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
 		ResultSet rs=null ;
