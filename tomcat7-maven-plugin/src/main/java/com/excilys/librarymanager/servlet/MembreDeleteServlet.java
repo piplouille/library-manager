@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import com.excilys.librarymanager.service.MembreServiceImpl;
+
+import com.excilys.librarymanager.model.Membre;
+
 public class MembreDeleteServlet extends HttpServlet {
     /*
     Deux méthodes :
@@ -21,8 +25,20 @@ public class MembreDeleteServlet extends HttpServlet {
     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // On va récupérer l'id de l'url
-        
+        int id = Integer.parseInt(request.getParameter("id"));
 
+        // Et récupérer le membre correspondant s'il existe
+        Membre membre = null;
+        MembreServiceImpl membre_service = MembreServiceImpl.getInstance();
+
+        try {
+            membre = membre_service.getById(id);
+        }
+        catch (Exception e) {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
+
+        request.setAttribute("membre", membre);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/membre_delete.jsp");
         dispatcher.forward(request, response);

@@ -1,4 +1,8 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%@page import="com.excilys.librarymanager.model.Livre"%>
+<%Livre livre = (Livre) request.getAttribute("livre");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,16 +25,16 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Suppression du livre numero 42 </h5> <!-- TODO : afficher l'id du livre au lieu de 42 -->
+      <h5>Suppression du livre numero ${livre.getId()} </h5> <!-- DONE : afficher l'id du livre au lieu de 42 -->
         <div class="row">
-          <p>Etes-vous sur de vouloir supprimer le livre TitreDuLivre de NomDeLAuteur (code isbnDuLivre) ?</p> <!-- TODO : completer les trois informations ci-contre -->
-	      <form action="/LibraryManager/livre_delete" method="post" class="col s12">
-            <input type="hidden" value="idDuLivre" name="id"> <!-- TODO : remplacer idDuLivre par l'id du livre -->
+          <p>Etes-vous sur de vouloir supprimer le livre ${livre.getTitre()} de ${livre.getAuteur()} (code ${livre.getIsbn()}) ?</p> <!-- DONE : completer les trois informations ci-contre -->
+	      <form action="/tomcat7-maven-plugin/livre_delete" method="post" class="col s12">
+            <input type="hidden" value=${livre.getId()} name="id"> <!-- DONE : remplacer idDuLivre par l'id du livre -->
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit">Supprimer
 	            <i class="material-icons right">delete</i>
 	          </button>
-	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/livre_details?id=idDuLivre">Annuler</a> <!-- TODO : remplacer idDuLivre par l'id du livre -->
+	          <a class="btn waves-effect waves-light orange" href="/tomcat7-maven-plugin/livre_details?id=${livre.getId()}">Annuler</a> <!-- DONE : remplacer idDuLivre par l'id du livre -->
 	        </div>
 	      </form>
 	    </div>	    

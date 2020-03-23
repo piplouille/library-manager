@@ -31,7 +31,7 @@
 	          </div>
 	          <div class="input-field col s6">
 	            <input id="prenom" type="text" name="prenom">
-	            <label for="prenom">Pr�nom</label>
+	            <label for="prenom">Prénom</label>
 	          </div>
 	        </div>
 	        <div class="row">
@@ -47,7 +47,7 @@
 	          </div>
 	          <div class="input-field col s6">
 	            <input id="telephone" type="tel" name="telephone">
-	            <label for="telephone">T�l�phone</label>
+	            <label for="telephone">Téléphone</label>
 	          </div>
 	        </div>
 	        <div class="row center">

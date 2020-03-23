@@ -1,4 +1,9 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%@page import="com.excilys.librarymanager.model.Membre"%>
+
+<%Membre membre = (Membre) request.getAttribute("membre");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,9 +26,9 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Suppression du membre n°312</h5> <!-- TODO : remplacer 312 par l'id du membre -->
+      <h5>Suppression du membre numÃ©ro ${membre.getKey())}</h5> <!-- TODO : remplacer 312 par l'id du membre -->
         <div class="row">
-          <p>Êtes-vous sûr de vouloir supprimer la fiche de prenomDuMembre nomDuMembre ?</p> <!-- TODO : remplacer prenomDuMembre et nomDuMembre par les valeurs correspondantes -->
+          <p>ÃŠtes-vous sÃ»r de vouloir supprimer la fiche de ${membre.getPrenom()} ${membre.getNom()} ?</p> <!-- TODO : remplacer prenomDuMembre et nomDuMembre par les valeurs correspondantes -->
 	      <form action="/LibraryManager/membre_delete" method="post" class="col s12">
             <input type="hidden" value="idDuMembre" name="id"> <!-- TODO : remplacer idDuMembre par l'id du membre -->
 	        <div class="row center">
