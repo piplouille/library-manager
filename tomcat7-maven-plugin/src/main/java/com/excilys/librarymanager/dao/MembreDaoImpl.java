@@ -35,6 +35,7 @@ public class MembreDaoImpl implements MembreDao {
     public List<Membre> getList() throws DaoException {
         List<Membre> membres = null;
         
+        ResultSet res = null;
         Connection connection = null;
         PreparedStatement getPreparedStatement = null;
         
@@ -42,8 +43,7 @@ public class MembreDaoImpl implements MembreDao {
         try { 
             connection = ConnectionManager.getConnection();
             getPreparedStatement = connection.prepareStatement(SelectQuery);
-            ResultSet rs = getPreparedStatement.executeQuery();
-            getPreparedStatement.close();
+            res = getPreparedStatement.executeQuery();
 
             /*
              * Il faut mettre les membres dans une liste : on crée une liste qu'on
@@ -52,14 +52,12 @@ public class MembreDaoImpl implements MembreDao {
             // On crée la liste
             membres = new ArrayList<Membre>();
 
-            while (rs.next()) {
+            while (res.next()) {
                 // On ajoute le membre à la liste
-                membres.add(new Membre(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
-                        rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"),
-                        Abonnement.valueOf(rs.getString("abonnement"))));
-            }
-            // On renvoie la liste
-            
+                membres.add(new Membre(res.getInt("id"), res.getString("nom"), res.getString("prenom"),
+                        res.getString("adresse"), res.getString("email"), res.getString("telephone"),
+                        Abonnement.valueOf(res.getString("abonnement"))));
+            }            
         } catch (SQLException e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new DaoException("ERREUR : MembreDaoImpl.getList()");
@@ -68,9 +66,22 @@ public class MembreDaoImpl implements MembreDao {
         }
         finally {
             try {
+                res.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getPreparedStatement.close();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
                 connection.close();
             }
-            catch (SQLException e) {
+            catch (Exception e) {
                 System.out.println("Exception Message " + e.getLocalizedMessage());
             }
         }
@@ -128,7 +139,6 @@ public class MembreDaoImpl implements MembreDao {
             res = getPreparedStatement.getGeneratedKeys();
             if (res.next()) {
                 id = res.getInt(1);
-                System.out.println("CA A MARCHE");
             }
 
         } catch (SQLException e) {
