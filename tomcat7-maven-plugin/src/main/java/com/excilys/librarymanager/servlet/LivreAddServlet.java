@@ -21,7 +21,13 @@ public class LivreAddServlet extends HttpServlet {
     Une fois livre ajouté : redirection vers page de détails du livre ie récupérer son identifiant
     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_add.jsp");
         dispatcher.forward(request, response);
+        }
+        catch (ServiceException e)
+        {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+        }
     }
 }

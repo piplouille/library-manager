@@ -16,7 +16,10 @@ import com.excilys.librarymanager.exception.ServiceException;
 import com.excilys.librarymanager.service.MembreServiceImpl;
 import com.excilys.librarymanager.service.EmpruntServiceImpl;
 import com.excilys.librarymanager.service.LivreServiceImpl;
+
 // import com.excilys.librarymanager.dao.MembreDaoImpl;
+
+import com.excilys.librarymanager.model.Emprunt;
 // import com.excilys.librarymanager.model.Membre;
 
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class DashboardServlet extends HttpServlet {
             EmpruntServiceImpl emprunt_service = EmpruntServiceImpl.getInstance();
             int no_emprunts = emprunt_service.count();
             request.setAttribute("no_emprunts", no_emprunts);
+
+            List<Emprunt> liste = emprunt_service.getListCurrent();
+            request.setAttribute("liste_emprunts", liste);
 
             LivreServiceImpl livre_service = LivreServiceImpl.getInstance();
             int no_livres = livre_service.count();

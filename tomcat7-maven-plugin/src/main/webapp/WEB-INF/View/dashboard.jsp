@@ -3,6 +3,7 @@
 <%int no_membres = (Integer) request.getAttribute("no_membres");%>
 <%int no_emprunts = (Integer) request.getAttribute("no_emprunts");%>
 <%int no_livres = (Integer) request.getAttribute("no_livres");%>
+<%List<Emprunt> liste_emprunts = request.getAttribute("liste_emprunts");%>
 
 <!DOCTYPE html>
 <html>
