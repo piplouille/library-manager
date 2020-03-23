@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>Library Management</title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -26,11 +26,11 @@
       </div>
       <div class="row">
       <div class="container">
-      <h5>Suppression du membre numéro ${membre.getKey())}</h5> <!-- TODO : remplacer 312 par l'id du membre -->
+      <h5>Suppression du membre numero ${membre.getKey()}</h5>
         <div class="row">
-          <p>Êtes-vous sûr de vouloir supprimer la fiche de ${membre.getPrenom()} ${membre.getNom()} ?</p> <!-- TODO : remplacer prenomDuMembre et nomDuMembre par les valeurs correspondantes -->
-	      <form action="/LibraryManager/membre_delete" method="post" class="col s12">
-            <input type="hidden" value="idDuMembre" name="id"> <!-- TODO : remplacer idDuMembre par l'id du membre -->
+          <p>Etes-vous sur de vouloir supprimer la fiche de ${membre.getPrenom()} ${membre.getNom()} ?</p>
+	      <form action="/tomcat7-maven-plugin/membre_delete" method="post" class="col s12">
+            <input type="hidden" value="${membre.getKey()}" name="id">
 	        <div class="row center">
 	          <button class="btn waves-effect waves-light red" type="submit" name="action">Supprimer
 	            <i class="material-icons right">delete</i>

@@ -1,4 +1,11 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%@page import="com.excilys.librarymanager.model.Livre"%>
+<%@page import="com.excilys.librarymanager.model.Membre"%>
+<%@page import="java.util.List"%>
+<%List<Livre> liste_livres = (List<Livre>) request.getAttribute("liste_livres_dispos");%>
+<%List<Membre> liste_membres = (List<Membre>) request.getAttribute("liste_membres_pouvant_emprunter");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,22 +28,26 @@
       </div>
       <div class="row">
       <div class="container">
-        <h5>Sectionnez le livre et le membre emprunteur</h5>
+        <h5>Selectionnez le livre et le membre emprunteur</h5>
         <div class="row">
-	      <form action="/LibraryManager/emprunt_add" method="post" class="col s12">
+	      <form action="/tomcat7-maven-plugin/emprunt_add" method="post" class="col s12">
 	        <div class="row">
 	          <div class="input-field col s6">
 	            <select id="idLivre" name="idLivre" class="browser-default">
 	              <option value="" disabled selected>-- Livres --</option>
-	              <!-- TODO : parcourir la liste des livres disponibles et afficher autant d'options que nessaire, sur la base de l'exemple ci-dessous -->
-                  <option value="idDuLivre">"Titre du livre", de Nom de l'auteur</option>
+                <!-- DONE : parcourir la liste des livres disponibles et afficher autant d'options que nessaire, sur la base de l'exemple ci-dessous -->
+                <c:forEach items="${liste_livres}" var="livre">
+                  <option value=${livre.getId()}>"${livre.getTitre()}", de ${livre.getAuteur()}</option>
+                </c:forEach>
 	            </select>
 	          </div>
 	          <div class="input-field col s6">
 	            <select id="idMembre" name="idMembre" class="browser-default">
 	              <option value="" disabled selected>-- Membres --</option>
-	              <!-- TODO : parcourir la liste des membres pouvant emprunter et afficher autant d'options que nessaire, sur la base de l'exemple ci-dessous -->
-                  <option value="idDuMembre">Prem et nom du membre</option>
+                <!-- DONE : parcourir la liste des membres pouvant emprunter et afficher autant d'options que necessaire, sur la base de l'exemple ci-dessous -->
+                <c:forEach items="${liste_membres}" var="membre">
+                  <option value=${membre.getKey()}>${membre.getPrenom()} ${membre.getNom()}</option>
+                </c:forEach>
 	            </select>
 	          </div>
 	        </div>

@@ -44,5 +44,22 @@ public class MembreDeleteServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        MembreServiceImpl membre_service = MembreServiceImpl.getInstance();
+
+        //Suppression du membre
+        try{
+            membre_service.delete(id);
+        }catch (Exception e)
+        {
+            System.out.println("Exception Message " + e.getLocalizedMessage());
+            throw new ServletException();
+        }
+
+        response.sendRedirect("/tomcat7-maven-plugin/membre_list");
+    }
+
     
 }
