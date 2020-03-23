@@ -330,6 +330,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 	 */
 	public Emprunt getById(int id) throws DaoException {
 		Emprunt emprunt=null;
+
 		Connection connection = null;
 		PreparedStatement getPreparedStatement = null ;
 		ResultSet rs =null;
@@ -341,6 +342,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement = connection.prepareStatement(SelectQuery);
 			getPreparedStatement.setInt(1, id);
 			rs = getPreparedStatement.executeQuery();
+			rs.next();
 			Abonnement abonnement = null;
 			switch (rs.getString("abonnement")) {
 				case "BASIC":
@@ -356,12 +358,10 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			if (abonnement == null) {
 				throw new SQLException();
 			}
-			Membre membre = new Membre(rs.getInt("idMembre"), rs.getString("nom"), rs.getString("prenom"),
-					rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
-			Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),
-					rs.getString("isbn"));
-			emprunt = new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate(),
-					rs.getDate("dateRetour").toLocalDate());
+			Membre membre = new Membre(rs.getInt("idMembre"), rs.getString("nom"), rs.getString("prenom"),rs.getString("adresse"), rs.getString("email"), rs.getString("telephone"), abonnement);
+			Livre livre = new Livre(rs.getInt("idLivre"), rs.getString("titre"), rs.getString("auteur"),rs.getString("isbn"));
+
+			emprunt = new Emprunt(rs.getInt("idEmprunt"), membre, livre, rs.getDate("dateEmprunt").toLocalDate());
 		} catch (SQLException e) {
 			throw new DaoException("Erreur : Emprunt.getById !");
 		}
@@ -369,21 +369,22 @@ public class EmpruntDaoImpl implements EmpruntDao {
             try {
                 rs.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new DaoException("Erreur : Emprunt.getById rs");
             }
 
             try {
                 getPreparedStatement.close();
             }
             catch (Exception e) {
-                e.printStackTrace();
+                throw new DaoException("Erreur : Emprunt.getById getPS");
             }
 
             try {
                 connection.close();
             }
             catch (Exception e) {
-                System.out.println("Exception Message " + e.getLocalizedMessage());
+				System.out.println("Exception Message " + e.getLocalizedMessage());
+				throw new DaoException("Erreur : Emprunt.getById co");
             }
         }
 		return emprunt;
@@ -465,9 +466,9 @@ public class EmpruntDaoImpl implements EmpruntDao {
 			getPreparedStatement = connection.prepareStatement(InsertQuery);
 			getPreparedStatement.setInt(1, emprunt.getMembre().getKey());
 			getPreparedStatement.setInt(2, emprunt.getLivre().getId());
-			getPreparedStatement.setDate(2, Date.valueOf(emprunt.getDateEmprunt()));
-			getPreparedStatement.setDate(3, Date.valueOf(emprunt.getDateRetour()));
-			getPreparedStatement.setInt(4, emprunt.getId());
+			getPreparedStatement.setDate(3, Date.valueOf(emprunt.getDateEmprunt()));
+			getPreparedStatement.setDate(4, Date.valueOf(emprunt.getDateRetour()));
+			getPreparedStatement.setInt(5, emprunt.getId());
 			getPreparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(

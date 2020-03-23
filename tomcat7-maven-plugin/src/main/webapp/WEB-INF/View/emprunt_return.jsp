@@ -1,4 +1,12 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+<%@page import="com.excilys.librarymanager.model.Emprunt"%>
+<%@page import="com.excilys.librarymanager.model.Livre"%>
+<%@page import="com.excilys.librarymanager.model.Membre"%>
+<%@page import="java.util.List"%>
+<%List<Emprunt> liste = (List<Emprunt>) request.getAttribute("liste_emprunts");%>
+<%int id_emprunt = (Integer) request.getAttribute("id_emprunt");%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,16 +29,18 @@
       </div>
       <div class="row">
       <div class="container">
-        <h5>Sélectionnez le livre à retourner</h5>
+        <h5>Selectionnez le livre a retourner</h5>
         <div class="row">
-	      <form action="/LibraryManager/emprunt_return" method="post" class="col s12">
+	      <form action="/tomcat7-maven-plugin/emprunt_return" method="post" class="col s12">
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <select id="id" name="id" class="browser-default">
 	              <option value="" disabled selected>---</option>
-                  <!-- TODO : parcourir la liste des emprunts non rendus et afficher autant d'options que nécessaire, sur la base de l'exemple ci-dessous -->
-                  <!-- TODO : si l'attribut id existe, l'option correspondante devra être sélectionnée par défaut (ajouter l'attribut selected dans la balise <option>) -->
-                  <option value="idDeLEmprunt">"Titre du livre", emprunté par Prénom et nom du membre emprunteur</option>
+                  <!-- DONE : parcourir la liste des emprunts non rendus et afficher autant d'options que necessaire, sur la base de l'exemple ci-dessous -->
+                  <!-- DONE : si l'attribut id existe, l'option correspondante devra etre selectionnee par defaut (ajouter l'attribut selected dans la balise <option>) -->
+                  <c:forEach items="${liste_emprunts}" var="emprunt">
+                    <option value="${emprunt.getId()}" ${(emprunt.getId() == id_emprunt) ? " selected" : ""}>"${emprunt.getLivre().getTitre()}", emprunte par ${emprunt.getMembre().getPrenom()} ${emprunt.getMembre().getNom()}</option>
+                  </c:forEach>
 	            </select>
 	          </div>
 	        </div>

@@ -48,7 +48,7 @@ public class MembreDetailsServlet extends HttpServlet {
         catch (Exception e) {
             System.out.println("Exception Message " + e.getLocalizedMessage());
         }
-        System.out.println(liste.size());
+        // System.out.println(liste.size());
         request.setAttribute("membre", membre);
         request.setAttribute("liste_emprunts", liste);
         

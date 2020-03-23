@@ -31,7 +31,7 @@
       <div class="container">
       <h5>Details du livre numero ${livre.getId()}</h5>
         <div class="row">
-	      <form action="/LibraryManager/livre_details?id=${livre.getId()}" method="post" class="col s12"> <!-- DONE : remplacer idDuLivre par l'id du livre -->
+	      <form action="/tomcat7-maven-plugin/livre_details?id=${livre.getId()}" method="post" class="col s12"> <!-- DONE : remplacer idDuLivre par l'id du livre -->
 	        <div class="row">
 	          <div class="input-field col s12">
 	            <input id="titre" type="text" value=${livre.getTitre()} name="titre"> <!-- DONE : remplacer titreDuLivre par le titre du livre -->

@@ -79,8 +79,9 @@ public class LivreDetailsServlet extends HttpServlet {
             System.out.println("Exception Message " + e.getLocalizedMessage());
         } 
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_details.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect("/tomcat7-maven-plugin/livre_details?id="+id);
+        // RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/livre_details.jsp");
+        // dispatcher.forward(request, response);
         
     }
 }
