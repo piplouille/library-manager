@@ -24,13 +24,10 @@
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/exception/ServletException.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/service/LivreService.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/dao/LivreDao.java
-/home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/test/ServiceTest.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/utils/FillDatabase.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/service/EmpruntService.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/dao/LivreDaoImpl.java
-/home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/test/ModeleTest.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/service/EmpruntServiceImpl.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/service/LivreServiceImpl.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/model/Abonnement.java
-/home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/test/DaoTest.java
 /home/laetitia/Documents/2A/in205/in205-library-manager/tomcat7-maven-plugin/src/main/java/com/excilys/librarymanager/servlet/LivreDeleteServlet.java
