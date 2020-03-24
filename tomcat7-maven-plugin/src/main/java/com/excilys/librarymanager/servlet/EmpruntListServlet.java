@@ -23,33 +23,40 @@ public class EmpruntListServlet extends HttpServlet {
     doGet() : afficher liste des emprunts en cours mais si show=all, totalite des emprunts a afficher
     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
         EmpruntServiceImpl emprunt_service = EmpruntServiceImpl.getInstance();
 
-        String show = request.getParameter("show");
+        String show = null;
+        if (request.getParameterMap().containsKey("show")) {
+            if (request.getParameter("show").equals("all")) {
+                show = "all";
+            }
+        }
 
         //Creation de la liste des emprunts
         List<Emprunt> liste = null;
         try{
             //Si show=all, on affiche tous les emprunts
-            if(show.equals("all"))
+            if(show != null)
             {
+                System.out.println("Show vaut all, recherche liste complete");
                 liste = emprunt_service.getList();
             }
             //Sinon on n'affiche que les emprunts en cours
-            else if (show == null) {
+            else {
+                System.out.println("Show est nul, liste des current");
                 liste = emprunt_service.getListCurrent();
             }
             
         }catch (ServiceException e)
         {
+            System.out.println("Recherche liste emprunt a échoué");
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new ServletException();
         }
 
         //Envoi de la liste
         request.setAttribute("liste", liste);
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/View/emprunt_list.jsp");
         dispatcher.forward(request, response);
     }
