@@ -32,14 +32,20 @@ public class LivreServiceImpl implements LivreService
 	 */
     public List<Livre> getList() throws ServiceException
     {
+        List<Livre> liste=null;        
         try{
             LivreDaoImpl dao = LivreDaoImpl.getInstance();
-            return dao.getList();
+            liste = dao.getList();
         }
         catch(DaoException error)
         {
             throw new ServiceException("Erreur Service Livre : liste des livres");
         }
+        if(liste==null)
+        {
+            throw new ServiceException("Erreur Service Livre : liste des livres LISTE NULL");
+        }
+        return liste;
     }
 
     /**
@@ -72,18 +78,24 @@ public class LivreServiceImpl implements LivreService
 	 */
     public Livre getById(int id) throws ServiceException
     {
+        Livre livre = null;
         if(id<0)
         {
             throw new ServiceException("Erreur Service Livre : livre par id ID INVALIDE");
         }
         try{
             LivreDaoImpl dao = LivreDaoImpl.getInstance();
-            return dao.getById(id);
+            livre = dao.getById(id);
         }
         catch(DaoException error)
         {
             throw new ServiceException("Erreur Service Livre : livre par id");
         }
+        if(livre==null)
+        {
+            throw new ServiceException("Erreur Service Livre : livre par id LIVRE NUL");
+        }
+        return livre;
     }
 
     /**
@@ -103,14 +115,20 @@ public class LivreServiceImpl implements LivreService
         {
             throw new ServiceException("Erreur Service Livre : creation de livre ISBN NUL");
         }
+        int id=-1;
         try{
             LivreDaoImpl dao = LivreDaoImpl.getInstance();
-            return dao.create(titre,auteur,isbn);
+            id = dao.create(titre,auteur,isbn);
         }
         catch(DaoException error)
         {
             throw new ServiceException("Erreur Service Livre : creation du livre "+titre+" par "+auteur+" isbn : "+isbn);
         }
+        if(id==-1)
+        {
+            throw new ServiceException("Erreur Service Livre : creation du livre ID INVALIDE");
+        }
+        return id ;
     }
 
     /**
@@ -156,13 +174,19 @@ public class LivreServiceImpl implements LivreService
 	 */
     public int count() throws ServiceException
     {
+        int count = -1 ;
         try{
             LivreDaoImpl dao = LivreDaoImpl.getInstance();
-            return dao.count();
+            count = dao.count();
         }
         catch(DaoException error)
         {
             throw new ServiceException("Erreur Service Livre : comptage des livres");
         }
+        if(count==-1)
+        {
+            throw new ServiceException("Erreur Service Livre : comptage des livres COMPTAGE INVALIDE");
+        }
+        return count;
     }
 }

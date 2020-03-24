@@ -33,14 +33,20 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public List<Emprunt> getList() throws ServiceException
     {
+        List<Emprunt> liste=null;
         try{
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            return dao.getList();
+            liste = dao.getList();
         }
         catch(DaoException error)
         {
             throw new ServiceException("Erreur : Service emprunt getList");
         }
+        if (liste==null)
+        {
+            throw new ServiceException("Erreur : Service emprunt getList LISTE VIDE");
+        }
+        return liste;
     }
 
     /**
@@ -48,14 +54,19 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public List<Emprunt> getListCurrent() throws ServiceException
     {
+        List<Emprunt> liste=null;
         try{
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            return dao.getListCurrent();
+            liste =  dao.getListCurrent();
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt liste emprunts en cours");
         }
-
+        if (liste==null)
+        {
+            throw new ServiceException("Erreur : Service emprunt getList LISTE VIDE");
+        }
+        return liste;
     }
 
     /**
@@ -63,13 +74,19 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public List<Emprunt> getListCurrentByMembre(int idMembre) throws ServiceException
     {
+        List<Emprunt> liste=null;
         try{
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            return dao.getListCurrentByMembre(idMembre);
+            liste = dao.getListCurrentByMembre(idMembre);
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt liste emprunts en cours d'un membre "+idMembre);
         }
+        if (liste==null)
+        {
+            throw new ServiceException("Erreur : Service emprunt getListCurrentByMembre LISTE VIDE");
+        }
+        return liste;
     }
 
     /**
@@ -77,13 +94,19 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public List<Emprunt> getListCurrentByLivre(int idLivre) throws ServiceException
     {
+        List<Emprunt> liste=null;
         try{
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            return dao.getListCurrentByLivre(idLivre);
+            liste = dao.getListCurrentByLivre(idLivre);
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt liste emprunts en cours d'un livre "+idLivre);
         }
+        if (liste==null)
+        {
+            throw new ServiceException("Erreur : Service emprunt getListCurrentByLivre LISTE VIDE");
+        }
+        return liste;
     }
 
     /**
@@ -95,18 +118,19 @@ public class EmpruntServiceImpl implements EmpruntService
         {
             throw new ServiceException("Erreur : Service recuperer un emprunt par id : ID INVALIDE");
         }
+        EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
+        Emprunt emprunt = null;
         try{
-            EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            Emprunt emprunt = dao.getById(id); //idLivre
-            if (emprunt == null)
-            {
-                throw new ServiceException("Erreur : Service recuperer un emprunt par id : EMRPUNT NON TROUVE");
-            }
-            return emprunt;
+            emprunt = dao.getById(id); //idLivre
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt recuperer emprunt par id "+id);
         }
+        if (emprunt == null)
+            {
+                throw new ServiceException("Erreur : Service recuperer un emprunt par id : EMRPUNT NON TROUVE");
+            }
+            return emprunt;
     }
 
     /**
@@ -125,8 +149,8 @@ public class EmpruntServiceImpl implements EmpruntService
         {
             throw new ServiceException("Erreur : Service creer un emprunt : DATE EMPRUNT NULLE");
         }
+        EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
         try{
-            EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             dao.create(idMembre,idLivre,dateEmprunt);
         } catch (DaoException error)
         {
@@ -163,15 +187,21 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public int count() throws ServiceException
     {
+        EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
+        int i = -1;
         try{
-            EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
-            int i = dao.count();
-            return i ;
+            i = dao.count();
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt compter les emprunts");
         }
+        if(i==-1)
+        {
+            throw new ServiceException("Erreur : Service Emprunt compter les emprunts COMPTE INVALIDE");
+        }
+        return i;
     }
+
 
     /**
 	 * @brief Service pour savoir si le livre est disponible
@@ -179,6 +209,7 @@ public class EmpruntServiceImpl implements EmpruntService
     // on suppose qu'il n'y a qu'un seul exemplaire de chaque livre
     public boolean isLivreDispo(int idLivre) throws ServiceException
     {
+        boolean misAjour=false;//Verifie que la fonction a bien fait son job
         if(idLivre<0)
         {
             throw new ServiceException("Erreur : Service si livre dispo : ID LIVRE INVALIDE");
@@ -189,9 +220,14 @@ public class EmpruntServiceImpl implements EmpruntService
             // renvoie listes des emprunts en cours
             List<Emprunt> emprunts = dao.getListCurrentByLivre(idLivre);
             result = emprunts.size();
+            misAjour = true;
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt si livre dispo");
+        }
+        if(!misAjour)
+        {
+            throw new ServiceException("Erreur : Service Emprunt si livre dispo RESULTAT INVALIDE");
         }
         return (result == 0);
     }
@@ -201,6 +237,8 @@ public class EmpruntServiceImpl implements EmpruntService
 	 */
     public boolean isEmpruntPossible(Membre membre) throws ServiceException
     {
+        boolean result = false;
+        boolean misAjour=false;//Verifie que la fonction a bien fait son job
         if(membre==null)
         {
             throw new ServiceException("Erreur : Service si emprunt possible : MEMBRE NUL");
@@ -223,10 +261,16 @@ public class EmpruntServiceImpl implements EmpruntService
             }
             EmpruntDaoImpl dao = EmpruntDaoImpl.getInstance();
             int nbEmprunts = dao.getListCurrentByMembre(membre.getKey()).size();
-            return (nbEmprunts<nbLivres);
+            result = (nbEmprunts<nbLivres);
+            misAjour=true;
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt si emprunt possible");
         }
+        if(!misAjour)
+        {
+            throw new ServiceException("Erreur : Service Emprunt si emprunt possible RESULTAT INVALIDE");
+        }
+        return result;
     }
 }

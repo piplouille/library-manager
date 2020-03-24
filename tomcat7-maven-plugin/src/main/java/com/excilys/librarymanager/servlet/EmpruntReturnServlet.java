@@ -57,7 +57,7 @@ public class EmpruntReturnServlet extends HttpServlet {
         EmpruntServiceImpl emprunt_service = EmpruntServiceImpl.getInstance();
 
         //Recuperation de l'identifiant de l'emprunt a retourner
-        int id_emprunt = Integer.parseInt(request.getParameter("id_emprunt"));
+        int id_emprunt = Integer.parseInt(request.getParameter("id"));
 
         try{
             emprunt_service.returnBook(id_emprunt);
