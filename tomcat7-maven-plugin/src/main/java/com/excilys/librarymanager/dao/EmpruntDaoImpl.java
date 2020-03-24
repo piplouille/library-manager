@@ -41,7 +41,7 @@ public class EmpruntDaoImpl implements EmpruntDao {
 		try {
 			connection = ConnectionManager.getConnection();
 
-			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre ORDER BY dateRetour DESC;";
+			String SelectQuery = "SELECT e.id AS id, idMembre, nom, prenom, adresse, email,telephone, abonnement, idLivre, titre, auteur, isbn, dateEmprunt,dateRetour FROM emprunt AS e INNER JOIN membre ON membre.id = e.idMembre INNER JOIN livre ON livre.id = e.idLivre"; //ORDER BY dateRetour DESC;";
 
 			getPreparedStatement = connection.prepareStatement(SelectQuery);
 			rs = getPreparedStatement.executeQuery();
