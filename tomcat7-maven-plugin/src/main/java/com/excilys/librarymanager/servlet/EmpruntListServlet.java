@@ -38,18 +38,16 @@ public class EmpruntListServlet extends HttpServlet {
             //Si show=all, on affiche tous les emprunts
             if(show != null)
             {
-                System.out.println("Show vaut all, recherche liste complete");
                 liste = emprunt_service.getList();
             }
             //Sinon on n'affiche que les emprunts en cours
             else {
-                System.out.println("Show est nul, liste des current");
                 liste = emprunt_service.getListCurrent();
             }
             
         }catch (ServiceException e)
         {
-            System.out.println("Recherche liste emprunt a échoué");
+            System.out.println("Recherche liste emprunt a echoue");
             System.out.println("Exception Message " + e.getLocalizedMessage());
             throw new ServletException();
         }

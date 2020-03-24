@@ -72,6 +72,9 @@ public class MembreServiceImpl implements MembreService {
     public Membre getById(int id) throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
         Membre membre = null;
+        if (id < 0) {
+            throw new ServiceException("id membre incorrect");
+        }
         try {
             membre = dao_membre.getById(id);
         }
@@ -186,6 +189,9 @@ public class MembreServiceImpl implements MembreService {
      */
     public void delete(int id) throws ServiceException {
         MembreDaoImpl dao_membre = MembreDaoImpl.getInstance();
+        if (id < 0) {
+            throw new ServiceException("id membre incorrect");
+        }
         try {
             dao_membre.delete(id);
         }

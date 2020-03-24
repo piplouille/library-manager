@@ -54,6 +54,7 @@ public class LivreDeleteServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         //Suppression du livre
+        //Il faudrait aussi supprimer les emprunts de ce livre sinon la BDD bug
         try{
             livre_service.delete(id);
         }catch (ServiceException e)

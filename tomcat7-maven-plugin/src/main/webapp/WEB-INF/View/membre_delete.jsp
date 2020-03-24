@@ -35,7 +35,7 @@
 	          <button class="btn waves-effect waves-light red" type="submit" name="action">Supprimer
 	            <i class="material-icons right">delete</i>
 	          </button>
-	          <a class="btn waves-effect waves-light orange" href="/LibraryManager/membre_details?id=idDuMembre">Annuler</a> <!-- TODO : remplacer idDuMembre par l'id du membre -->
+	          <a class="btn waves-effect waves-light orange" href="/tomcat7-maven-plugin/membre_details?id=${membre.getKey()}">Annuler</a> <!-- DONE : remplacer idDuMembre par l'id du membre -->
 	        </div>
 	      </form>
 	    </div>	    

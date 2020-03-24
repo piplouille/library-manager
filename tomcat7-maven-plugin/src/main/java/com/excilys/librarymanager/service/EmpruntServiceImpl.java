@@ -42,10 +42,6 @@ public class EmpruntServiceImpl implements EmpruntService
         {
             throw new ServiceException("Erreur : Service emprunt getList");
         }
-        if (liste==null)
-        {
-            throw new ServiceException("Erreur : Service emprunt getList LISTE VIDE");
-        }
         return liste;
     }
 
@@ -61,10 +57,6 @@ public class EmpruntServiceImpl implements EmpruntService
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt liste emprunts en cours");
-        }
-        if (liste==null)
-        {
-            throw new ServiceException("Erreur : Service emprunt getList LISTE VIDE");
         }
         return liste;
     }
@@ -101,10 +93,6 @@ public class EmpruntServiceImpl implements EmpruntService
         } catch (DaoException error)
         {
             throw new ServiceException("Erreur : Service Emprunt liste emprunts en cours d'un livre "+idLivre);
-        }
-        if (liste==null)
-        {
-            throw new ServiceException("Erreur : Service emprunt getListCurrentByLivre LISTE VIDE");
         }
         return liste;
     }
